@@ -1,26 +1,31 @@
-import { ReactElement, ReactNode } from "react";
-import { SizableText, YStack as TYStack, styled } from "tamagui";
-import { Button } from "~/app/(auth)/components/button";
+import { Link } from 'expo-router';
+import { ReactElement } from 'react';
+import { SizableText, YStack as TYStack, styled } from 'tamagui';
+
+import { Button } from '~/app/(auth)/components/button';
 
 interface ILink {
-  title: string;
-  callback: MyFnType;
+  activeText: string;
+  pathname: string;
+  text?: string;
+  isFlexEnd?: boolean;
 }
 
-export default function Link(props: ILink): ReactElement {
+export default function LinkComposite(props: ILink): ReactElement {
+  const { text, activeText, pathname, isFlexEnd } = props;
   return (
-    <YStack>
-      <SizableText>Have an account?</SizableText>
-      <Link href={{ pathname: "/login" }} asChild>
-        <Button background={"link"}>Sign in</Button>
+    <YStack justifyContent={isFlexEnd ? 'flex-end' : 'center'}>
+      <SizableText fontSize="$3">{text}</SizableText>
+      <Link href={{ pathname }} asChild>
+        <Button type="link">{activeText}</Button>
       </Link>
     </YStack>
   );
 }
 
 const YStack = styled(TYStack, {
-  mt: 16,
+  w: '100%',
   flexDirection: 'row',
-  alignItems: 'flex-end',
-  gap: 6,
-})
+  alignItems: 'center',
+  gap: 4,
+});

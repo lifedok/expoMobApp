@@ -3,7 +3,7 @@ import { createInterFont } from '@tamagui/font-inter';
 import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
 import { themes, tokens } from '@tamagui/themes';
-import { createTamagui } from 'tamagui';
+import { createTamagui, createTokens, H1, SizableText, styled, YStack } from "tamagui";
 
 const animations = createAnimations({
   bouncy: {
@@ -28,6 +28,84 @@ const animations = createAnimations({
 const headingFont = createInterFont();
 
 const bodyFont = createInterFont();
+
+export const Container = styled(YStack, {
+  flex: 1,
+  padding: 24,
+});
+
+export const Main = styled(YStack, {
+  flex: 1,
+  justifyContent: 'space-between',
+  maxWidth: 960,
+});
+
+export const Title = styled(H1, {
+  color: '#000',
+  size: '$12',
+});
+
+export const Subtitle = styled(SizableText, {
+  color: '#38434D',
+  size: '$9',
+});
+
+export const Button = styled(YStack, {
+  alignItems: 'center',
+  backgroundColor: '#6366F1',
+  borderRadius: 28,
+  hoverStyle: {
+    backgroundColor: '#5a5fcf',
+  },
+  justifyContent: 'center',
+  maxWidth: 500,
+  padding: 16,
+  shadowColor: '#000',
+  shadowOffset: {
+    height: 2,
+    width: 0,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+});
+
+export const ButtonText = styled(SizableText, {
+  color: '#FFFFFF',
+  fontSize: 16,
+  fontWeight: '600',
+  textAlign: 'center',
+});
+
+// const customTokens = createTokens({
+//   color: {
+//     pinkDark: '#610c62',
+//     pinkLight: '#f17efc',
+//   },
+//   ...tokens,
+// }) as const;
+
+// const customTheme = createTamagui({
+//   ...customTokens,
+//   themes: {
+//     dark: {
+//       background: '#000',
+//       color: '#fff',
+//     },
+//     light: {
+//       color: '#000',
+//       background: '#fff',
+//     },
+//     dark_pink: {
+//       background: customTokens.color.pinkDark,
+//       color: customTokens.color.pinkLight,
+//     },
+//     light_pink: {
+//       background: customTokens.color.pinkLight,
+//       color: customTokens.color.pinkDark,
+//     },
+//   },
+//   ...themes
+// });
 
 const config = createTamagui({
   light: {
@@ -64,6 +142,7 @@ const config = createTamagui({
     pointerCoarse: { pointer: 'coarse' },
   }),
 });
+
 
 type AppConfig = typeof config;
 

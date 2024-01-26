@@ -3,7 +3,7 @@ import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { Button, Text, YStack } from 'tamagui';
 
-import { Container, Main, Subtitle, Title } from '../../tamagui.config';
+import { Container, Main, Subtitle, Title } from '~/tamagui.config';
 
 export default function Details() {
   const { name } = useLocalSearchParams();

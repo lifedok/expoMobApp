@@ -1,16 +1,21 @@
 import { useFonts } from 'expo-font';
-import { Slot, SplashScreen } from 'expo-router';
+import { Slot, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { TamaguiProvider } from 'tamagui';
+import { TamaguiProvider, Theme } from 'tamagui';
 
 import config from '../tamagui.config';
 
-SplashScreen.preventAutoHideAsync();
+const InitialLayout = () => {
+  const router = useRouter();
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(drawer)',
+  useEffect(() => {
+    // router.replace('/login');
+    router.replace('/(auth)/login');
+    // router.replace('/(drawer)/(tabs)/home');
+  }, []);
+
+  return <Slot />;
 };
 
 export default function RootLayout() {
@@ -19,18 +24,15 @@ export default function RootLayout() {
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
   });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) return null;
-
+  if (!loaded) {
+    return null;
+  }
   return (
     <TamaguiProvider config={config}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Slot />
+        <Theme name="light">
+          <InitialLayout />
+        </Theme>
       </GestureHandlerRootView>
     </TamaguiProvider>
   );

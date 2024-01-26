@@ -1,7 +1,7 @@
 import { Link, Stack } from 'expo-router';
 import { YStack } from 'tamagui';
 
-import { Container, Main, Title, Subtitle, Button, ButtonText } from '../tamagui.config';
+import { Container, Main, Title, Subtitle, Button, ButtonText } from '../../tamagui.config';
 
 export default function Page() {
   return (

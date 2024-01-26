@@ -1,10 +1,16 @@
-import { H4, YStack, Text } from 'tamagui';
+import { Button, Input, Label, LinkComposite, Title, Wrapper } from '~/app/(auth)/components';
 
-export default function Register() {
+export default function Reset() {
   return (
-    <YStack>
-      <H4>Register</H4>
-      <Text color="$color">Hello</Text>
-    </YStack>
+    <Wrapper>
+      <Title>Reset</Title>
+
+      <Label>Email</Label>
+      <Input placeholder="Enter your email" />
+
+      <Button mt="$8">Reset password</Button>
+
+      <LinkComposite activeText="Back to login" pathname="/login" />
+    </Wrapper>
   );
 }

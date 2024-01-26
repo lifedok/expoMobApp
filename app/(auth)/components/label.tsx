@@ -1,5 +1,6 @@
-import { SizableText, styled } from "tamagui";
+import { SizableText, styled } from 'tamagui';
 
-export const Lable = styled(SizableText, {
-  alignItem: 'flex-start'
+export const Label = styled(SizableText, {
+  alignItem: 'flex-start',
+  width: '100%',
 });

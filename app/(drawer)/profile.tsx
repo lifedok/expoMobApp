@@ -5,7 +5,7 @@ const Page = () => {
   return (
     <Theme name="light">
       <YStack flex={1} alignItems="center" justifyContent="center">
-        <H2>Home</H2>
+        <H2>Profile</H2>
         <Separator />
       </YStack>
 

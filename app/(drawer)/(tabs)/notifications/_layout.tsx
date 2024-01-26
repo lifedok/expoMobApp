@@ -1,46 +1,41 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { DrawerToggleButton } from '@react-navigation/drawer';
+import { useRouter } from "expo-router";
+import { Drawer } from 'expo-router/drawer';
+import React from 'react';
+import { Pressable } from 'react-native';
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={styles.tabBarIcon} {...props} />;
-}
+import Notifications from '~/app/(drawer)/(tabs)/notifications/notifications';
 
-export default function TabsLayout() {
+export const LogoutButton = () => {
+  const router = useRouter();
+  // const { signOut } = useAuth();
+  //
+  // const doLogout = () => {
+  //   signOut();
+  // };
+  // onPress={doLogout}
+  // href={{ pathname: '/login' }}
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: 'black',
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="home"
+    <Pressable onPress={() => router.replace('/(auth)/login')} style={{ marginRight: 10 }}>
+      <Ionicons name="log-out-outline" size={24} color="blue" />
+    </Pressable>
+  );
+};
+
+export default function Page() {
+  return (
+    <>
+      <Drawer.Screen
         options={{
-          tabBarLabel: 'Home',
-          title: 'Home tab',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerTitle: 'Notifications',
+          headerShown: true,
+          headerLeft: () => <DrawerToggleButton />,
+          headerRight: () => <LogoutButton />,
         }}
       />
-      <Tabs.Screen
-        name="notifications"
-        options={{
-          title: 'Notifications tab',
-          tabBarLabel: 'Notifications',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
+
+      <Notifications />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  headerRight: {
-    marginRight: 15,
-  },
-  tabBarIcon: {
-    marginBottom: -3,
-  },
-});

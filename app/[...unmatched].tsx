@@ -1,20 +1,16 @@
-import { Link, Stack } from 'expo-router';
-import { YStack } from 'tamagui';
+import { router } from 'expo-router';
 
-import { Container, Main, Subtitle, Title } from '../tamagui.config';
+import { Button, Title, Wrapper } from '~/app/(auth)/components';
 
 export default function NotFoundScreen() {
   return (
-    <Container>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <Main>
-        <YStack>
-          <Title>This screen doesn't exist.</Title>
-          <Link href="/">
-            <Subtitle>Go to home screen!</Subtitle>
-          </Link>
-        </YStack>
-      </Main>
-    </Container>
+    <Wrapper>
+      <Title>Oops!</Title>
+      <Title>This screen doesn't exist.</Title>
+
+      <Button mt="$8" onPress={() => router.replace('/(auth)/login')}>
+        Go to home screen!
+      </Button>
+    </Wrapper>
   );
 }
