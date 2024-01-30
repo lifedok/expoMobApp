@@ -1,6 +1,6 @@
 // import { signInWithEmailAndPassword } from '@firebase/auth';
+import { signInWithEmailAndPassword } from '@firebase/auth';
 import { Link } from 'expo-router';
-
 import { useState } from 'react';
 
 import { Label, Input, Title, Button, LinkComposite, Wrapper } from '~/app/(auth)/components';
@@ -14,19 +14,19 @@ export default function Login() {
   // const [errorText, setErrorText] = useState<string>('');
 
   const firebaseSignIn = async () => {
-  //   setLoading(true);
-  //   setErrors(false);
-  //
-  //   await signInWithEmailAndPassword(firebaseAuth, email, password)
-  //     .then(() => {
-  //       setLoading(false);
-  //       alert(`Login successful! \n Welcome ${firebaseAuth.currentUser?.email}`);
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //       setErrors(true);
-  //     });
-  };
+    //   setLoading(true);
+    //   setErrors(false);
+    //
+    await signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then(() => {
+        setLoading(false);
+        alert(`Login successful! \n Welcome ${firebaseAuth.currentUser?.email}`);
+      })
+      .catch((error) => {
+        alert(error.message);
+        // setErrors(true);
+      });
+  };//lifedok@gmail.com
 
   return (
     <Wrapper>
