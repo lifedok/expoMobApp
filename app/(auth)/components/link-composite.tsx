@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import { ReactElement } from 'react';
-import { SizableText, YStack as TYStack, styled } from 'tamagui';
+import { SizableText, YStack, styled } from 'tamagui';
 
 import { Button } from '~/app/(auth)/components/button';
 
@@ -14,16 +14,16 @@ interface ILink {
 export default function LinkComposite(props: ILink): ReactElement {
   const { text, activeText, pathname, isFlexEnd } = props;
   return (
-    <YStack justifyContent={isFlexEnd ? 'flex-end' : 'center'}>
+    <Wrapper justifyContent={isFlexEnd ? 'flex-end' : 'center'}>
       <SizableText fontSize="$3">{text}</SizableText>
       <Link href={{ pathname }} asChild>
         <Button type="link">{activeText}</Button>
       </Link>
-    </YStack>
+    </Wrapper>
   );
 }
 
-const YStack = styled(TYStack, {
+const Wrapper = styled(YStack, {
   w: '100%',
   flexDirection: 'row',
   alignItems: 'center',

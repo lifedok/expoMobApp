@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
 
-import { Label, Input, Title, Button, LinkComposite, Wrapper } from '~/app/(auth)/components';
+import { Label, Input, Title, Button, LinkComposite, Wrapper, InputSecure } from '~/app/(auth)/components';
 import { firebaseAuth } from '~/utils/firebase';
 
 export default function Register() {
@@ -9,7 +9,6 @@ export default function Register() {
   const [password, setPassword] = useState<any>('');
   const [confirmPassword, setConfirmPassword] = useState<any>('');
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [isSecureText, setSecureText] = useState<boolean>(true);
   const [hasErrors, setErrors] = useState<boolean>(true);
 
   const handleCreateAccount = async () => {
@@ -39,20 +38,16 @@ export default function Register() {
       <Input placeholder="Enter your Email" value={email} onChangeText={(v) => setEmail(v)} />
 
       <Label>Password</Label>
-      <Input
+      <InputSecure
         placeholder="Enter your password"
         value={password}
-        secureTextEntry
-        onChangeText={(v) => setPassword(v)}
-      />
+        onChangeText={(v) => setPassword(v)}/>
 
       <Label>Confirm password</Label>
-      <Input
-        mb="$4"
+      <InputSecure
         placeholder="Confirm password"
         value={confirmPassword}
-        onChangeText={(v) => setConfirmPassword(v)}
-      />
+        onChangeText={(v) => setConfirmPassword(v)}/>
 
       <Button mt="$8" onPress={handleCreateAccount} disabled={!email || !password}>
         {`Creat${hasErrors || !isLoading ? 'e' : 'ing'} account`}
