@@ -1,4 +1,3 @@
-// import { signInWithEmailAndPassword } from '@firebase/auth';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { Link } from 'expo-router';
 import { useState } from 'react';
@@ -20,13 +19,12 @@ export default function Login() {
     await signInWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
         setLoading(false);
-        alert(`Login successful! \n Welcome ${firebaseAuth.currentUser?.email}`);
       })
       .catch((error) => {
         alert(error.message);
         // setErrors(true);
       });
-  };//lifedok@gmail.com
+  };
 
   return (
     <Wrapper>
@@ -37,7 +35,6 @@ export default function Login() {
 
       <Label>Password</Label>
       <Input
-        mb="$0"
         placeholder="Enter your password"
         value={password}
         onChangeText={(v) => setPassword(v)}
