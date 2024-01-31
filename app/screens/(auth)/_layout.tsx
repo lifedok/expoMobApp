@@ -20,7 +20,7 @@ const PublicLayout = () => {
         }}
       />
       <Stack.Screen
-        name="reset"
+        name="forgot"
         options={{
           headerTitle: 'Reset Password',
         }}

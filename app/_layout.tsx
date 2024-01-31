@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from '@firebase/auth';
+import { onAuthStateChanged, User as UserAuth } from '@firebase/auth';
 import { useFonts } from 'expo-font';
 import { Slot, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -7,21 +7,22 @@ import { TamaguiProvider, Theme } from 'tamagui';
 
 import config from '../tamagui.config';
 
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
 const InitialLayout = () => {
-  const [user, serUser] = useState(null);
+  const [user, setUser] = useState<UserAuth | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
       console.log('user', user);
-      serUser(user as any); //TODO: any
+      setUser(user);
     });
   }, []);
 
   useEffect(() => {
-    router.replace(user ? '/screens/(drawer)/(tabs)/home' : '/screens/(auth)/login');
+    router.replace(user ? EPathRouteScreen.HOME : EPathRouteScreen.LOGIN);
   }, [user]);
 
   return <Slot />;

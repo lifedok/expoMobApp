@@ -11,11 +11,12 @@ import {
   InputSecure,
 } from './components/index.tsx';
 
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
 export default function Register() {
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<any>('');
+  const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isLoading, setLoading] = useState<boolean>(false);
   const [hasErrors, setErrors] = useState<boolean>(true);
@@ -64,7 +65,11 @@ export default function Register() {
         {`Creat${hasErrors || !isLoading ? 'e' : 'ing'} account`}
       </Button>
 
-      <LinkComposite text="Have an account?" activeText="Sign in" pathname="/screens/(auth)/login" />
+      <LinkComposite
+        text="Have an account?"
+        activeText="Sign in"
+        pathname={EPathRouteScreen.LOGIN}
+      />
     </Wrapper>
   );
 }

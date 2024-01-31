@@ -11,6 +11,7 @@ import {
   InputSecure,
 } from './components/index.tsx';
 
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
 export default function Login() {
@@ -48,12 +49,16 @@ export default function Login() {
         onChangeText={(v) => setPassword(v)}
       />
 
-      <LinkComposite isFlexEnd activeText="Forgot password" pathname="/screens/(auth)/reset" />
+      <LinkComposite isFlexEnd activeText="Forgot password" pathname={EPathRouteScreen.FORGOT} />
 
       <Button mt="$8" onPress={firebaseSignIn}>
         {!isLoading ? 'Login' : 'Logging'}
       </Button>
-      <LinkComposite text={"Don't have an Account?"} activeText="Sign up" pathname="/screens/(auth)/register" />
+      <LinkComposite
+        text={"Don't have an Account?"}
+        activeText="Sign up"
+        pathname={EPathRouteScreen.REGISTER}
+      />
     </Wrapper>
   );
 }

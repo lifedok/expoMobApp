@@ -1,9 +1,19 @@
-export const ERoute = {
-  MAIN: '/',
-  LOGIN: '/login',
-  FAVORITES: '/favorites',
-  ROOM: '/offer',
-  LOCATION: '/location',
+
+const EPathRoute = {
+  AUTH: '/screens/(auth)',
+  DRAWER: '/screens/(drawer)',
+  TABS: '/screens/(drawer)/(tabs)',
+};
+
+export const EPathRouteScreen = {
+  START: '/',
+  LOGIN: `${EPathRoute.AUTH}/login`,
+  REGISTER: `${EPathRoute.AUTH}/register`,
+  FORGOT: `${EPathRoute.AUTH}/forgot`,
+
+  HOME: `${EPathRoute.TABS}/home`,
+  LIST: `${EPathRoute.TABS}/list`,
+  DETAILS: `${EPathRoute.TABS}/home/details`,
 };
 
 export enum ApiRoute {

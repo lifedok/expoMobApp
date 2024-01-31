@@ -5,9 +5,10 @@ import { YStack, H4, styled } from 'tamagui';
 
 import { Label, Input, Title, Button, LinkComposite, Wrapper } from './components/index.tsx';
 
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
-export default function Reset() {
+export default function Forgot() {
   const [email, setEmail] = useState<string>('');
   const [isResetLink, setResetLink] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export default function Reset() {
         <BlockResult>
           <Text>A password reset request has been sent.</Text>
           <Text>Check your email or spam folder to find password reset link</Text>
-          <Button onPress={() => router.replace('/screens/(auth)/login')} mt="$10">
+          <Button onPress={() => router.replace(EPathRouteScreen.LOGIN)} mt="$10">
             Back to login
           </Button>
         </BlockResult>
@@ -47,7 +48,7 @@ export default function Reset() {
           <Button onPress={handleResetPassword} disabled={!email} mt="$8">
             {`Reset${hasErrors || !isLoading ? '' : 'ing'} password`}
           </Button>
-          <LinkComposite activeText="Back to login" pathname="/screens/(auth)/login" />
+          <LinkComposite activeText="Back to login" pathname={EPathRouteScreen.LOGIN} />
         </BlockInput>
       )}
     </Wrapper>
