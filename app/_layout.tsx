@@ -7,7 +7,7 @@ import { TamaguiProvider, Theme } from 'tamagui';
 
 import config from '../tamagui.config';
 
-import { firebaseAuth } from '~/utils/firebase';
+import { firebaseAuth } from '~/app/utils/firebase';
 
 const InitialLayout = () => {
   const [user, serUser] = useState(null);
@@ -21,7 +21,7 @@ const InitialLayout = () => {
   }, []);
 
   useEffect(() => {
-    router.replace(user ? '/(drawer)/(tabs)/home' : '/(auth)/login');
+    router.replace(user ? '/screens/(drawer)/(tabs)/home' : '/screens/(auth)/login');
   }, [user]);
 
   return <Slot />;

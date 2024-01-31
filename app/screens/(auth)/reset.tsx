@@ -3,8 +3,9 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { YStack, H4, styled } from 'tamagui';
 
-import { Button, Input, Label, LinkComposite, Title, Wrapper } from '~/app/(auth)/components';
-import { firebaseAuth } from '~/utils/firebase';
+import { Label, Input, Title, Button, LinkComposite, Wrapper } from './components/index.tsx';
+
+import { firebaseAuth } from '~/app/utils/firebase';
 
 export default function Reset() {
   const [email, setEmail] = useState<string>('');
@@ -35,7 +36,7 @@ export default function Reset() {
         <BlockResult>
           <Text>A password reset request has been sent.</Text>
           <Text>Check your email or spam folder to find password reset link</Text>
-          <Button onPress={() => router.replace('/login')} mt="$10">
+          <Button onPress={() => router.replace('/screens/(auth)/login')} mt="$10">
             Back to login
           </Button>
         </BlockResult>
@@ -46,7 +47,7 @@ export default function Reset() {
           <Button onPress={handleResetPassword} disabled={!email} mt="$8">
             {`Reset${hasErrors || !isLoading ? '' : 'ing'} password`}
           </Button>
-          <LinkComposite activeText="Back to login" pathname="/login" />
+          <LinkComposite activeText="Back to login" pathname="/screens/(auth)/login" />
         </BlockInput>
       )}
     </Wrapper>

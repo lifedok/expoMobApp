@@ -1,13 +1,22 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
 
-import { Label, Input, Title, Button, LinkComposite, Wrapper, InputSecure } from '~/app/(auth)/components';
-import { firebaseAuth } from '~/utils/firebase';
+import {
+  Label,
+  Input,
+  Title,
+  Button,
+  LinkComposite,
+  Wrapper,
+  InputSecure,
+} from './components/index.tsx';
+
+import { firebaseAuth } from '~/app/utils/firebase';
 
 export default function Register() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<any>('');
-  const [confirmPassword, setConfirmPassword] = useState<any>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isLoading, setLoading] = useState<boolean>(false);
   const [hasErrors, setErrors] = useState<boolean>(true);
 
@@ -41,19 +50,21 @@ export default function Register() {
       <InputSecure
         placeholder="Enter your password"
         value={password}
-        onChangeText={(v) => setPassword(v)}/>
+        onChangeText={(v) => setPassword(v)}
+      />
 
       <Label>Confirm password</Label>
       <InputSecure
         placeholder="Confirm password"
         value={confirmPassword}
-        onChangeText={(v) => setConfirmPassword(v)}/>
+        onChangeText={(v) => setConfirmPassword(v)}
+      />
 
       <Button mt="$8" onPress={handleCreateAccount} disabled={!email || !password}>
         {`Creat${hasErrors || !isLoading ? 'e' : 'ing'} account`}
       </Button>
 
-      <LinkComposite text="Have an account?" activeText="Sign in" pathname="/login" />
+      <LinkComposite text="Have an account?" activeText="Sign in" pathname="/screens/(auth)/login" />
     </Wrapper>
   );
 }

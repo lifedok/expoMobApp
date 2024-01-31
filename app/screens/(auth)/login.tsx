@@ -1,12 +1,21 @@
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
 
-import { Label, Input, Title, Button, LinkComposite, Wrapper, InputSecure } from '~/app/(auth)/components';
-import { firebaseAuth } from '~/utils/firebase';
+import {
+  Label,
+  Input,
+  Title,
+  Button,
+  LinkComposite,
+  Wrapper,
+  InputSecure,
+} from './components/index.tsx';
+
+import { firebaseAuth } from '~/app/utils/firebase';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<any>('');
+  const [password, setPassword] = useState<string>('');
   const [isLoading, setLoading] = useState<boolean>(false);
   // const [hasErrors, setErrors] = useState<boolean>(true);
   // const [errorText, setErrorText] = useState<string>('');
@@ -36,15 +45,15 @@ export default function Login() {
       <InputSecure
         placeholder="Enter your password"
         value={password}
-        onChangeText={(v) => setPassword(v)}/>
+        onChangeText={(v) => setPassword(v)}
+      />
 
-      <LinkComposite isFlexEnd activeText="Forgot password" pathname="/reset" />
+      <LinkComposite isFlexEnd activeText="Forgot password" pathname="/screens/(auth)/reset" />
 
       <Button mt="$8" onPress={firebaseSignIn}>
         {!isLoading ? 'Login' : 'Logging'}
       </Button>
-      <LinkComposite text={"Don't have an Account?"} activeText="Sign up" pathname="/register" />
-
+      <LinkComposite text={"Don't have an Account?"} activeText="Sign up" pathname="/screens/(auth)/register" />
     </Wrapper>
   );
 }

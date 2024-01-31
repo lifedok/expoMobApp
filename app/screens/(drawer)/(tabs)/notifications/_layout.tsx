@@ -4,8 +4,9 @@ import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 import { Pressable } from 'react-native';
 
-import Notifications from '~/app/(drawer)/(tabs)/notifications/notifications';
-import { firebaseAuth } from '~/utils/firebase';
+import Notifications from './notifications';
+
+import { firebaseAuth } from '~/app/utils/firebase';
 
 export const LogoutButton = () => {
   const handleSignOut = () => {

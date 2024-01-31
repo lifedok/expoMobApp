@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { ReactElement } from 'react';
 import { InputProps, styled, YStack } from 'tamagui';
 
-import { Input } from '~/app/(auth)/components/input';
+import { Input } from './input';
 
 interface IInputSecure extends InputProps {}
 
@@ -10,7 +10,7 @@ export default function InputSecure(props: IInputSecure): ReactElement {
   const [isSecureText, setSecureText] = React.useState<boolean>(true);
   return (
     <Wrapper>
-      <Input {...props} secureTextEntry={isSecureText} mb={'$0'}/>
+      <Input {...props} secureTextEntry={isSecureText} mb="$0" />
       <IconContainer>
         <Ionicons
           name={isSecureText ? 'eye-off' : 'eye'}
@@ -24,7 +24,7 @@ export default function InputSecure(props: IInputSecure): ReactElement {
 const Wrapper = styled(YStack, {
   position: 'relative',
   width: '100%',
-  mb: '$2'
+  mb: '$2',
 });
 
 const IconContainer = styled(YStack, {

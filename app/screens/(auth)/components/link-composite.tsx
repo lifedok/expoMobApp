@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { ReactElement } from 'react';
 import { SizableText, YStack, styled } from 'tamagui';
 
-import { Button } from '~/app/(auth)/components/button';
+import { Button } from './button';
 
 interface ILink {
   activeText: string;
