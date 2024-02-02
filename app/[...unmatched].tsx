@@ -9,8 +9,8 @@ export default function NotFoundScreen() {
       <Title>Oops!</Title>
       <Title>This screen doesn't exist.</Title>
 
-      <Button mt="$8" onPress={() => router.replace(EPathRouteScreen.HOME)}>
-        Go to home screen!
+      <Button mt="$8" onPress={() => router.replace(EPathRouteScreen.START)}>
+        Go to start screen!
       </Button>
     </Wrapper>
   );

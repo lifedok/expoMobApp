@@ -11,6 +11,7 @@ import {
   InputSecure,
 } from './components/index.tsx';
 
+import { AuthData } from '~/app/types/auth-data';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
@@ -21,6 +22,11 @@ export default function Login() {
   // const [hasErrors, setErrors] = useState<boolean>(true);
   // const [errorText, setErrorText] = useState<string>('');
 
+  const onSubmit = (authData: AuthData) => {
+    console.log('authData', authData);
+    // dispatch(loginAction(authData));
+  };
+
   const firebaseSignIn = async () => {
     //   setLoading(true);
     //   setErrors(false);
@@ -28,6 +34,7 @@ export default function Login() {
     await signInWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
         setLoading(false);
+        onSubmit({ login: email, password });
       })
       .catch((error) => {
         alert(error.message);

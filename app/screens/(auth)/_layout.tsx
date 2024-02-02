@@ -7,24 +7,9 @@ const PublicLayout = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen
-        name="login"
-        options={{
-          headerTitle: 'Clerk Auth App',
-        }}
-      />
-      <Stack.Screen
-        name="register"
-        options={{
-          headerTitle: 'Create Account',
-        }}
-      />
-      <Stack.Screen
-        name="forgot"
-        options={{
-          headerTitle: 'Reset Password',
-        }}
-      />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
+      <Stack.Screen name="forgot" />
     </Stack>
   );
 };
