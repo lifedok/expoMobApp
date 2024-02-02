@@ -14,6 +14,8 @@ import {
 import { AuthData } from '~/app/types/auth-data';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
+import { userLogin } from "~/app/store/actions";
+import { useAppDispatch } from "~/app/hooks";
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -21,10 +23,10 @@ export default function Login() {
   const [isLoading, setLoading] = useState<boolean>(false);
   // const [hasErrors, setErrors] = useState<boolean>(true);
   // const [errorText, setErrorText] = useState<string>('');
+  const dispatch = useAppDispatch();
 
-  const onSubmit = (authData: AuthData) => {
-    console.log('authData', authData);
-    // dispatch(loginAction(authData));
+  const onSubmit = () => {
+    dispatch(userLogin());
   };
 
   const firebaseSignIn = async () => {
@@ -34,7 +36,6 @@ export default function Login() {
     await signInWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
         setLoading(false);
-        onSubmit({ login: email, password });
       })
       .catch((error) => {
         alert(error.message);
@@ -58,7 +59,7 @@ export default function Login() {
 
       <LinkComposite isFlexEnd activeText="Forgot password" pathname={EPathRouteScreen.FORGOT} />
 
-      <Button mt="$8" onPress={firebaseSignIn}>
+      <Button mt="$8" onPress={onSubmit}>
         {!isLoading ? 'Login' : 'Logging'}
       </Button>
       <LinkComposite

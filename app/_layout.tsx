@@ -33,12 +33,12 @@ const InitialLayout = () => {
 
   console.log('user', user);
   useEffect(() => {
-    router.replace(EPathRouteScreen.START);
+    // router.replace(EPathRouteScreen.START);
 
     // setTimeout(() => {
-    //   router.replace(!!user ? EPathRouteScreen.HOME : EPathRouteScreen.LOGIN);
+      router.replace(user ? EPathRouteScreen.HOME : EPathRouteScreen.LOGIN);
     // }, 3000)
-  }, []);
+  }, [user]);
 
   return <Slot />;
 };
