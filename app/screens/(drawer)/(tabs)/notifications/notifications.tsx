@@ -1,12 +1,16 @@
 import { H4, YStack, Text } from 'tamagui';
 
-import { useAppSelector } from '~/app/hooks';
+import { useAppDispatch, useAppSelector } from "~/app/hooks";
+import { addToFavorite, removeFromFavorite } from "~/app/store/actions";
+import { Button } from "~/app/screens/(auth)/components";
 
 export default function Notifications() {
   const favorites = useAppSelector(({ favorites }) => favorites);
+  const dispatch = useAppDispatch();
 
-  console.log('favorites', favorites);
-  console.log('favorites.length', favorites.length);
+  const onRemoveFavorite = (name: string): void => {
+    dispatch(removeFromFavorite({ item: { id: name } }));
+  };
 
   return (
     <YStack flex={1}>
@@ -18,9 +22,12 @@ export default function Notifications() {
           favorites.map((item, index) => {
             console.log('item', item);
             return (
-              <Text color="red" key={index}>
-                {item.id}
-              </Text>
+              <YStack key={`favorites_${index}`}>
+                <Text color="red">
+                  {item.id}
+                </Text>
+                <Button onPress={() => onRemoveFavorite(item.id)}>Remove from favorites item {item.id}</Button>
+              </YStack>
             );
           })
         ) : (

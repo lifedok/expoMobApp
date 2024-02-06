@@ -4,7 +4,7 @@ const AUTH_TOKEN_KEY_NAME = 'expo-mob-app';
 
 export type Token = string;
 
-const saveToken = async (token: Token) => {
+export const saveToken = async (token: Token) => {
   try {
     await AsyncStorage.setItem(AUTH_TOKEN_KEY_NAME, token);
   } catch (e) {
@@ -12,7 +12,7 @@ const saveToken = async (token: Token) => {
   }
 };
 
-const getToken = async () => {
+export const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem(AUTH_TOKEN_KEY_NAME);
     return token ?? '';
@@ -21,7 +21,7 @@ const getToken = async () => {
   }
 };
 
-const removeToken = async () => {
+export const removeToken = async () => {
   try {
     await AsyncStorage.removeItem(AUTH_TOKEN_KEY_NAME);
   } catch (e) {

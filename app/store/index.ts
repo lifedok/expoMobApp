@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer } from "~/app/store/reducer/user-data";
+
+import { reducer } from '~/app/store/reducer/user-data';
 
 // import { rootReducer } from '~/app/store/reducer/root-reduser';
 

@@ -1,25 +1,23 @@
-import { onAuthStateChanged, User as UserAuth } from "@firebase/auth";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFonts } from "expo-font";
-import { router, Slot, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Provider, useSelector } from "react-redux";
-import { TamaguiProvider, Theme } from "tamagui";
+import { QueryClientProvider } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
+import { router, Slot } from 'expo-router';
+import React, { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
+import { TamaguiProvider, Theme } from 'tamagui';
 
-import config from "../tamagui.config";
+import config from '../tamagui.config';
 
-import { useAppSelector } from "~/app/hooks";
-import { store } from "~/app/store";
-import { useGetUser } from "~/app/store/selectors";
-import { ReducerNameEnum } from "~/app/types/enums/reducer-name.enum";
-import { EPathRouteScreen } from "~/app/types/enums/route.enum";
-import { firebaseAuth } from "~/app/utils/firebase";
-// import { Provider } from "react-redux";
+import { useAppSelector } from '~/app/hooks';
+import { store } from '~/app/store';
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { firebaseAuth } from '~/app/utils/firebase';
+import { queryClient } from '~/queryClient';
 
 const InitialLayout = () => {
   const user = useAppSelector(({ user }) => user);
+  const theme = useAppSelector(({ theme }) => theme);
+
   // const {user} = useSelector((state) => state[ReducerNameEnum.USER]);
   // const [authUser, setUser] = useState<UserAuth | null>(null);
   // const router = useRouter();
@@ -31,16 +29,20 @@ const InitialLayout = () => {
   //   });
   // }, []);
 
-  console.log('user', user);
+  console.log('theme', theme);
   useEffect(() => {
     // router.replace(EPathRouteScreen.START);
 
     // setTimeout(() => {
-      router.replace(user ? EPathRouteScreen.HOME : EPathRouteScreen.LOGIN);
+    router.replace(user ? EPathRouteScreen.HOME : EPathRouteScreen.LOGIN);
     // }, 3000)
   }, [user]);
 
-  return <Slot />;
+  return (
+    <Theme name={theme}>
+      <Slot />
+    </Theme>
+  );
 };
 
 export default function RootLayout() {
@@ -52,13 +54,14 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+
   return (
-    <TamaguiProvider config={config}>
+    <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
-          <Theme name="light">
+          <QueryClientProvider client={queryClient}>
             <InitialLayout />
-          </Theme>
+          </QueryClientProvider>
         </Provider>
       </GestureHandlerRootView>
     </TamaguiProvider>
