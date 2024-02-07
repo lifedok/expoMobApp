@@ -12,7 +12,7 @@ const DrawerLayout = () => {
 
   const trendingQuery = useQuery({
     queryKey: ['trending'],
-    queryFn: getTrending,
+    queryFn: () => getTrending(1),
   });
 
   useEffect(() => {
