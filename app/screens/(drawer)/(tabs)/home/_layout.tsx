@@ -29,6 +29,12 @@ export default function Page() {
           }}
         />
         <Stack.Screen
+          name="[id]"
+          options={{
+            headerTitle: 'List item',
+          }}
+        />
+        <Stack.Screen
           name="details"
           options={{
             headerTitle: 'details',

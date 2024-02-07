@@ -5,8 +5,8 @@ import { Button, Text, YStack } from 'tamagui';
 
 import { Container, Main, Subtitle, Title } from '~/tamagui.config';
 
-export default function Details() {
-  const { name } = useLocalSearchParams<{ name: string }>();
+export default function Page() {
+  const { id } = useLocalSearchParams<{ id: number }>();
   const router = useRouter();
 
   const BackButton = () => (
@@ -24,11 +24,11 @@ export default function Details() {
 
   return (
     <Container>
-      <Stack.Screen options={{ title: 'Details', headerLeft: () => <BackButton /> }} />
+      <Stack.Screen options={{ title: 'List item', headerLeft: () => <BackButton /> }} />
       <Main>
         <YStack>
-          <Title>Details</Title>
-          <Subtitle>Showing details for user {name}.</Subtitle>
+          <Title>List item</Title>
+          <Subtitle>List item details for user {id}.</Subtitle>
         </YStack>
       </Main>
     </Container>
