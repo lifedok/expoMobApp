@@ -1,4 +1,4 @@
-import { TrendingResult } from '~/app/types/interfaces/apiresults';
+import { TrendingResult } from '~/app/types/interfaces/apiresults.interface';
 
 const API_KEY = process.env.EXPO_PUBLIC_KEY;
 
