@@ -1,5 +1,5 @@
 import { store } from '~/app/store';
 
-export type RootState = ReturnType<typeof store.getState>;
+export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch; // add types for action

@@ -12,7 +12,7 @@ export const saveLoginUserName = async (token: LoginUserName): Promise<void> => 
   }
 };
 
-export const getLoginUserName = async (): Promise<LoginUserName> => {
+export const getLoginUserName = async (): Promise<LoginUserName | undefined> => {
   try {
     const token = await AsyncStorage.getItem(LOGIN_USER_NAME_KEY);
     return token ?? '';

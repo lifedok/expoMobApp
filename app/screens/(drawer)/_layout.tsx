@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import { useAppDispatch } from '~/app/hooks';
 import { getTrending } from '~/app/services/api';
-import { loadTrendingMovie } from '~/app/store/actions';
+import { loadTrendingMovie } from '~/app/store/reducer/data-process';
 
 const DrawerLayout = () => {
   const dispatch = useAppDispatch();

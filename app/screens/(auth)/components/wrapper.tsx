@@ -1,10 +1,10 @@
 import { ReactElement, ReactNode } from 'react';
 import { ScrollView as TScrollView, YStack as TYStack, styled } from 'tamagui';
 
-export default function Wrapper(props: ReactNode): ReactElement {
+export default function Wrapper({ children }: { children: ReactNode }): ReactElement {
   return (
     <YStack>
-      <ScrollView>{props.children}</ScrollView>
+      <ScrollView>{children}</ScrollView>
     </YStack>
   );
 }

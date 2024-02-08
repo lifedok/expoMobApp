@@ -1,42 +1,48 @@
+import { onAuthStateChanged, User } from '@firebase/auth';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
-import { router, Slot } from 'expo-router';
-import React, { useEffect } from 'react';
+import { Slot, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { TamaguiProvider, Theme } from 'tamagui';
 
+import { requireAuthorization, setUser as setCustomUser } from './store/reducer/user-process';
 import config from '../tamagui.config';
 
-import { useAppSelector } from '~/app/hooks';
+import { useAppDispatch } from '~/app/hooks';
 import { store } from '~/app/store';
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { useGetUiSelector, useGetUserSelector } from '~/app/store/selectors';
+import { AuthorizationStatus, EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { queryClient } from '~/queryClient';
 
 const InitialLayout = () => {
-  const user = useAppSelector(({ user }) => user);
-  const theme = useAppSelector(({ theme }) => theme);
+  const router = useRouter();
+  const { user } = useGetUserSelector();
+  const dispatch = useAppDispatch();
+  const [authUser, setUser] = useState<User | null>(null);
 
-  // const {user} = useSelector((state) => state[ReducerNameEnum.USER]);
-  // const [authUser, setUser] = useState<UserAuth | null>(null);
-  // const router = useRouter();
+  const { theme } = useGetUiSelector();
 
-  // useEffect(() => {
-  //   onAuthStateChanged(firebaseAuth, (user) => {
-  //     console.log('user', user);
-  //     setUser(user);
-  //   });
-  // }, []);
-
-  console.log('theme', theme);
+  // TODO: user - firstly, get user token and after then redirect to firebaseAuth or to home screen (if token is success)
   useEffect(() => {
-    // router.replace(EPathRouteScreen.START);
+    onAuthStateChanged(firebaseAuth, (user) => {
+      setUser(user);
+      dispatch(setCustomUser(user));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+    });
+  }, []);
 
+  useEffect(() => {
+    // router.replace(EPathRouteScreen.START as any); // TODO
     // setTimeout(() => {
-    router.replace(user ? EPathRouteScreen.HOME : EPathRouteScreen.LOGIN);
-    // }, 3000)
+    router.replace(user ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never));
+    // }, 3000);
   }, [user]);
+
+  console.log('authUser', authUser);
+  console.log('setCustomUser', user);
 
   return (
     <Theme name={theme}>

@@ -1,22 +1,17 @@
+import { User as IUser } from '@firebase/auth';
+
 import { AuthorizationStatus } from '~/app/types/enums/route.enum';
 
 export type UserProcessType = {
-  user: TUser | null;
+  user: IUser | null;
+  userAuth: AuthDataType | null;
   authorizationStatus: AuthorizationStatus;
-};
-
-export type TUser = {
-  id: number;
+  errorText?: string;
 };
 
 export type AuthDataType = {
-  login: string;
-  password: string;
-};
-
-export type UserLoginDataType = {
-  userName: string;
   email: string;
+  userName?: string;
 };
 
 export type UserDataType = {

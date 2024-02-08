@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
 function TabBarIcon(props: {
@@ -10,7 +11,7 @@ function TabBarIcon(props: {
   return <FontAwesome size={28} style={styles.tabBarIcon} {...props} />;
 }
 
-export default function TabsLayout() {
+export default function TabsLayout(): React.ReactNode {
   return (
     <Tabs
       screenOptions={{

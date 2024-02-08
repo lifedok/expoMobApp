@@ -3,8 +3,14 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { YStack, H4, styled } from 'tamagui';
 
-import { Label, Input, Title, Button, LinkComposite, Wrapper } from './components/index.tsx';
-
+import {
+  Label,
+  Input,
+  Title,
+  Button,
+  LinkComposite,
+  Wrapper,
+} from '~/app/screens/(auth)/components';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
@@ -37,7 +43,8 @@ export default function Forgot() {
         <BlockResult>
           <Text>A password reset request has been sent.</Text>
           <Text>Check your email or spam folder to find password reset link</Text>
-          <Button onPress={() => router.replace(EPathRouteScreen.LOGIN)} mt="$10">
+          {/*TODO*/}
+          <Button onPress={() => router.replace(EPathRouteScreen.LOGIN as never)} mt="$10">
             Back to login
           </Button>
         </BlockResult>

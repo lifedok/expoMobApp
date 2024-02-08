@@ -1,5 +1,4 @@
 import { YStack, H2, Separator, Theme } from 'tamagui';
-import { Tabs } from 'expo-router';
 
 const Page = () => {
   return (

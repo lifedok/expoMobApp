@@ -12,7 +12,7 @@ export const saveToken = async (token: Token) => {
   }
 };
 
-export const getToken = async () => {
+export const getToken = async (): Promise<Token | undefined> => {
   try {
     const token = await AsyncStorage.getItem(AUTH_TOKEN_KEY_NAME);
     return token ?? '';
@@ -21,7 +21,7 @@ export const getToken = async () => {
   }
 };
 
-export const removeToken = async () => {
+export const removeToken = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(AUTH_TOKEN_KEY_NAME);
   } catch (e) {

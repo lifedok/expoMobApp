@@ -4,13 +4,15 @@ import { H4, YStack, Text } from 'tamagui';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { Button } from '~/app/screens/(auth)/components';
 import { HomeList } from '~/app/screens/(drawer)/(tabs)/home/mock';
-import { addToFavorite, toggleUiTheme } from '~/app/store/actions';
+import { addToFavorite } from '~/app/store/reducer/data-process';
+import { toggleUiTheme } from '~/app/store/reducer/ui-process';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { useGetDataSelector, useGetUiSelector } from "~/app/store/selectors";
 
 export default function List() {
   const dispatch = useAppDispatch();
-  const theme = useAppSelector(({ theme }) => theme);
-  const trendingMovie = useAppSelector(({ trendingMovie }) => trendingMovie);
+  const { theme } = useGetUiSelector();
+  const { trendingMovie } = useGetDataSelector();
 
   const onChooseFavorite = (name: string): void => {
     dispatch(addToFavorite({ item: { id: name } }));
@@ -27,11 +29,12 @@ export default function List() {
       <Text color="$color">Hello</Text>
       <Button onPress={onToggleUiTheme}>Now theme is {theme}</Button>
 
-      <Link href={{ pathname: EPathRouteScreen.DETAILS, params: { name: 'Vasy Pupkin Test' } }}>
+      {/*TODO*/}
+      <Link href={{ pathname: EPathRouteScreen.DETAILS, params: { name: 'Vasy Pupkin Test' }} as never}>
         <H4>Details</H4>
       </Link>
 
-      <Link href={`${EPathRouteScreen.HOME}/1`}>
+      <Link href={`${EPathRouteScreen.HOME}/1` as never}>
         <H4>Details 2</H4>
       </Link>
 

@@ -1,4 +1,3 @@
-
 const EPathRoute = {
   AUTH: '/screens/(auth)',
   DRAWER: '/screens/(drawer)',

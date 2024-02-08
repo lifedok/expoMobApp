@@ -6,7 +6,9 @@ import { UserProcessType } from '~/app/types/user-process.type';
 
 const initialState: UserProcessType = {
   user: null,
+  userAuth: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  errorText: '',
 };
 
 export const userProcess = createSlice({
@@ -16,13 +18,20 @@ export const userProcess = createSlice({
     requireAuthorization: (state, action) => {
       state.authorizationStatus = action.payload;
     },
-    userLogin: (state) => {
-      state.user = { id: 1 };
+    userLogin: (state, action) => {
+      state.userAuth = action.payload;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
     userLogout: (state) => {
       state.user = null;
     },
+    setErrorText: (state, action) => {
+      state.errorText = action.payload;
+    },
+
   },
 });
 
-export const { requireAuthorization, userLogin, userLogout } = userProcess.actions;
+export const { requireAuthorization, userLogin, setUser, userLogout, setErrorText } = userProcess.actions;

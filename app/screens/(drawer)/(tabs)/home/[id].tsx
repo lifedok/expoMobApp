@@ -6,7 +6,7 @@ import { Button, Text, YStack } from 'tamagui';
 import { Container, Main, Subtitle, Title } from '~/tamagui.config';
 
 export default function Page() {
-  const { id } = useLocalSearchParams<{ id: number }>();
+  const { id } = useLocalSearchParams<any>(); // TODO
   const router = useRouter();
 
   const BackButton = () => (

@@ -2,15 +2,14 @@ import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
 
 import {
-  Label,
-  Input,
-  Title,
   Button,
-  LinkComposite,
-  Wrapper,
+  Input,
   InputSecure,
-} from './components/index.tsx';
-
+  Label,
+  LinkComposite,
+  Title,
+  Wrapper,
+} from '~/app/screens/(auth)/components';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 

@@ -16,7 +16,8 @@ export default function LinkComposite(props: ILink): ReactElement {
   return (
     <Wrapper justifyContent={isFlexEnd ? 'flex-end' : 'center'}>
       <SizableText fontSize="$3">{text}</SizableText>
-      <Link href={{ pathname }} asChild>
+      {/*TODO*/}
+      <Link href={{ pathname } as never} asChild>
         <Button type="link">{activeText}</Button>
       </Link>
     </Wrapper>
