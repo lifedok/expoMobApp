@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 
-import { Button, Title, Wrapper } from '~/app/(auth)/components';
+import { Button, Title, Wrapper } from '~/app/screens/(auth)/components';
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 
 export default function NotFoundScreen() {
   return (
@@ -8,8 +9,9 @@ export default function NotFoundScreen() {
       <Title>Oops!</Title>
       <Title>This screen doesn't exist.</Title>
 
-      <Button mt="$8" onPress={() => router.replace('/(auth)/login')}>
-        Go to home screen!
+      {/*TODO*/}
+      <Button mt="$8" onPress={() => router.replace(EPathRouteScreen.START as never)}>
+        Go to start screen!
       </Button>
     </Wrapper>
   );
