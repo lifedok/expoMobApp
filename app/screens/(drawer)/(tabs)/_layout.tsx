@@ -29,10 +29,10 @@ export default function TabsLayout(): React.ReactNode {
         }}
       />
       <Tabs.Screen
-        name="notifications"
+        name="favorites"
         options={{
-          tabBarLabel: 'Notifications',
-          title: 'Notifications tab',
+          tabBarLabel: 'Favorites',
+          title: 'Favorites tab',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),

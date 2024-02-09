@@ -4,10 +4,10 @@ import { H4, YStack, Text } from 'tamagui';
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
 import { Button } from '~/app/screens/(auth)/components';
 import { HomeList } from '~/app/screens/(drawer)/(tabs)/home/mock';
-import { addToFavorite } from '~/app/store/reducer/data-process';
-import { toggleUiTheme } from '~/app/store/reducer/ui-process';
+import { addToFavorite } from '~/app/store/reducer/data/data-slice';
+import { toggleUiTheme } from '~/app/store/reducer/ui/ui-slice';
+import { useGetDataSelector, useGetUiSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
-import { useGetDataSelector, useGetUiSelector } from "~/app/store/selectors";
 
 export default function List() {
   const dispatch = useAppDispatch();
@@ -30,12 +30,14 @@ export default function List() {
       <Button onPress={onToggleUiTheme}>Now theme is {theme}</Button>
 
       {/*TODO*/}
-      <Link href={{ pathname: EPathRouteScreen.DETAILS, params: { name: 'Vasy Pupkin Test' }} as never}>
+      <Link
+        href={{ pathname: EPathRouteScreen.DETAILS, params: { name: 'Vasy Pupkin Test' } } as never}
+        asChild>
         <H4>Details</H4>
       </Link>
 
-      <Link href={`${EPathRouteScreen.HOME}/1` as never}>
-        <H4>Details 2</H4>
+      <Link href={`${EPathRouteScreen.HOME}/1` as never} asChild>
+        <H4>Details replace</H4>
       </Link>
 
       {HomeList.map((item, index) => (

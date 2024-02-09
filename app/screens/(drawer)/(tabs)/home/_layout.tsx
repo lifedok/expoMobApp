@@ -8,7 +8,7 @@ export default function Page() {
     <>
       <Drawer.Screen
         options={{
-          headerTitle: 'Home',
+          headerTitle: 'Movies',
           headerShown: true,
           headerLeft: () => <DrawerToggleButton />,
         }}
@@ -17,11 +17,18 @@ export default function Page() {
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#6c47ff',
+            backgroundColor: 'rgba(255,224,71,0.31)',
           },
-          headerTintColor: '#fff',
+          headerTintColor: '#000',
           headerBackTitle: 'Back',
         }}>
+        <Stack.Screen
+          name="movies"
+          options={{
+            headerTitle: 'Movies',
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="list"
           options={{

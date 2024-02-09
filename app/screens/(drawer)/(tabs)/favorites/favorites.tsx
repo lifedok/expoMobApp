@@ -1,12 +1,12 @@
 import { H4, YStack, Text } from 'tamagui';
 
 import { useAppDispatch, useAppSelector } from '~/app/hooks';
-import { removeFromFavorite } from '~/app/store/reducer/data-process';
+import { removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { Button } from "~/app/screens/(auth)/components";
 import { useGetDataSelector } from "~/app/store/selectors";
 
-export default function Notifications() {
-  const favorites = useAppSelector(({ favorites }) => favorites);
+export default function Favorites() {
+  const favorites = useGetDataSelector().favorites;
   const data = useGetDataSelector;
   const dispatch = useAppDispatch();
 

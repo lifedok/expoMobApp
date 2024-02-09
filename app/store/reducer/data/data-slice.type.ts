@@ -2,12 +2,15 @@ import { IListItem } from '~/app/screens/(drawer)/(tabs)/home/mock';
 import { MediaEnum } from '~/app/types/enums/media.enum';
 import { AuthorizationStatus } from '~/app/types/enums/route.enum';
 import { TrendingResult } from '~/app/types/interfaces/apiresults.interface';
-import { TUser } from '~/app/types/user-process.type';
 
-export type DataProcessType = {
-  trendingMovie: IListItem[];
+export type DataSliceType = {
+  trendingMovie: TrendingResult;
   favorites: IListItem[];
   isDataLoading: boolean;
+};
+
+export type TUser = {
+  id: number;
 };
 
 export type DataType = {
