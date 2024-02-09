@@ -11,7 +11,7 @@ import {
   Wrapper,
   InputSecure,
 } from '~/app/screens/(auth)/components';
-import { setErrorText, userLogin } from '~/app/store/reducer/user-process';
+import { setErrorText, userLogin } from '~/app/store/reducer/user/user-slice';
 import { useGetUserSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';

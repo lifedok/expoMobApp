@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
-import { dataProcess } from '~/app/store/reducer/data-process';
-import { uiProcess } from '~/app/store/reducer/ui-process';
-import { userProcess } from '~/app/store/reducer/user-process';
+import { dataSlice } from '~/app/store/reducer/data/data-slice';
+import { uiSlice } from '~/app/store/reducer/ui/ui-slice';
+import { userSlice } from '~/app/store/reducer/user/user-slice';
 import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
 
 export const rootReducer = combineReducers({
-  [ReducerNameEnum.DATA]: dataProcess.reducer,
-  [ReducerNameEnum.USER]: userProcess.reducer,
-  [ReducerNameEnum.UI]: uiProcess.reducer,
+  [ReducerNameEnum.DATA]: dataSlice.reducer,
+  [ReducerNameEnum.USER]: userSlice.reducer,
+  [ReducerNameEnum.UI]: uiSlice.reducer,
 });

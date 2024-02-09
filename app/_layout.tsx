@@ -7,42 +7,36 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { TamaguiProvider, Theme } from 'tamagui';
 
-import { requireAuthorization, setUser as setCustomUser } from './store/reducer/user-process';
 import config from '../tamagui.config';
 
-import { useAppDispatch } from '~/app/hooks';
 import { store } from '~/app/store';
-import { useGetUiSelector, useGetUserSelector } from '~/app/store/selectors';
-import { AuthorizationStatus, EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { useGetUiSelector } from '~/app/store/selectors';
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { queryClient } from '~/queryClient';
 
 const InitialLayout = () => {
   const router = useRouter();
-  const { user } = useGetUserSelector();
-  const dispatch = useAppDispatch();
-  const [authUser, setUser] = useState<User | null>(null);
+  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
 
   const { theme } = useGetUiSelector();
 
   // TODO: user - firstly, get user token and after then redirect to firebaseAuth or to home screen (if token is success)
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
-      setUser(user);
-      dispatch(setCustomUser(user));
-      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      setFirebaseUser(user);
     });
   }, []);
 
   useEffect(() => {
     // router.replace(EPathRouteScreen.START as any); // TODO
     // setTimeout(() => {
-    router.replace(user ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never));
+    router.replace(
+      EPathRouteScreen.HOME as never
+      // firebaseUser ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never)
+    );
     // }, 3000);
-  }, [user]);
-
-  console.log('authUser', authUser);
-  console.log('setCustomUser', user);
+  }, [firebaseUser]);
 
   return (
     <Theme name={theme}>

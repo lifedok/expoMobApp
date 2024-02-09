@@ -1,15 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { DataProcessType } from '~/app/types/data-process.type';
+import { DataSliceType } from '~/app/store/reducer/data/data-slice.type';
 import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
 
-const initialState: DataProcessType = {
-  trendingMovie: [],
+const initialState: DataSliceType = {
+  trendingMovie: {
+    page: 1,
+    results: [],
+    total_pages: 1,
+    total_results: 1,
+  },
   favorites: [],
   isDataLoading: false,
 };
 
-export const dataProcess = createSlice({
+export const dataSlice = createSlice({
   name: ReducerNameEnum.DATA,
   initialState,
   reducers: {
@@ -33,4 +38,4 @@ export const dataProcess = createSlice({
   },
 });
 
-export const { loadTrendingMovie, addToFavorite, removeFromFavorite } = dataProcess.actions;
+export const { loadTrendingMovie, addToFavorite, removeFromFavorite } = dataSlice.actions;
