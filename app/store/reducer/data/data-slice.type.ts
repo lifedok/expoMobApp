@@ -1,11 +1,12 @@
 import { IListItem } from '~/app/screens/(drawer)/(tabs)/home/mock';
 import { MediaEnum } from '~/app/types/enums/media.enum';
 import { AuthorizationStatus } from '~/app/types/enums/route.enum';
-import { TrendingResult } from '~/app/types/interfaces/apiresults.interface';
+import { ResultItem, TrendingResult } from "~/app/types/interfaces/apiresults.interface";
 
 export type DataSliceType = {
-  trendingMovie: TrendingResult;
-  favorites: IListItem[];
+  trendingMovies: TrendingResult;
+  isLoadingTrendingMovies: boolean;
+  favorites: ResultItem[];
   isDataLoading: boolean;
 };
 

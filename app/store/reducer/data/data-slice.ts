@@ -4,12 +4,13 @@ import { DataSliceType } from '~/app/store/reducer/data/data-slice.type';
 import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
 
 const initialState: DataSliceType = {
-  trendingMovie: {
+  trendingMovies: {
     page: 1,
     results: [],
     total_pages: 1,
     total_results: 1,
   },
+  isLoadingTrendingMovies: false,
   favorites: [],
   isDataLoading: false,
 };
@@ -18,8 +19,11 @@ export const dataSlice = createSlice({
   name: ReducerNameEnum.DATA,
   initialState,
   reducers: {
-    loadTrendingMovie: (state, action) => {
-      state.trendingMovie = action.payload;
+    loadTrendingMovies: (state, action) => {
+      state.trendingMovies = action.payload;
+    },
+    isLoadingTrendingMovies: (state, action) => {
+      state.isLoadingTrendingMovies = action.payload;
     },
     addToFavorite: (state, { payload }) => {
       const { item } = payload;
@@ -38,4 +42,4 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { loadTrendingMovie, addToFavorite, removeFromFavorite } = dataSlice.actions;
+export const { loadTrendingMovies, isLoadingTrendingMovies, addToFavorite, removeFromFavorite } = dataSlice.actions;
