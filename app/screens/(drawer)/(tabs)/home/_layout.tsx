@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 
-export default function Page() {
+export default function Page(): React.JSX.Element {
   return (
     <>
       <Drawer.Screen
@@ -30,21 +30,9 @@ export default function Page() {
           }}
         />
         <Stack.Screen
-          name="list"
-          options={{
-            headerTitle: 'List',
-          }}
-        />
-        <Stack.Screen
           name="[id]"
           options={{
             headerTitle: 'List item',
-          }}
-        />
-        <Stack.Screen
-          name="details"
-          options={{
-            headerTitle: 'details',
           }}
         />
       </Stack>

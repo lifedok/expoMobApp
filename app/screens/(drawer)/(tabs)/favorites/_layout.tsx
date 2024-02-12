@@ -4,8 +4,7 @@ import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 import { Pressable } from 'react-native';
 
-import Favorites from './favorites';
-
+import FavoritesPage from '~/app/pages/favorites-page/favorites-page';
 import { firebaseAuth } from '~/app/utils/firebase';
 
 export const LogoutButton = () => {
@@ -35,7 +34,7 @@ export default function Page() {
         }}
       />
 
-      <Favorites />
+      <FavoritesPage />
     </>
   );
 }

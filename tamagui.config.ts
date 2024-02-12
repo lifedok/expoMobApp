@@ -3,7 +3,7 @@ import { createInterFont } from '@tamagui/font-inter';
 import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
 import { themes, tokens } from '@tamagui/themes';
-import { createTamagui, createTokens, H1, SizableText, styled, YStack } from "tamagui";
+import { createTamagui, H1, SizableText, styled, YStack } from 'tamagui';
 
 const animations = createAnimations({
   bouncy: {
@@ -142,7 +142,6 @@ const config = createTamagui({
     pointerCoarse: { pointer: 'coarse' },
   }),
 });
-
 
 type AppConfig = typeof config;
 

@@ -1,16 +1,16 @@
-import { Dimensions } from "react-native";
-import { ScrollView, XStack, Text, styled, YStack, Spinner } from "tamagui";
+import { Dimensions } from 'react-native';
+import { ScrollView, Text, styled, YStack } from 'tamagui';
 
-import { MovieItem } from "../movie-item/movie-item";
+import { MovieItem } from './movie-item';
 
-import { ResultItem, TrendingResult } from "~/app/types/interfaces/apiresults.interface";
+import { ResultItem, TrendingResult } from '~/app/types/interfaces/apiresults.interface';
 
 interface IMovieList {
   list: TrendingResult;
 }
 
 export const MovieList = ({ list }: IMovieList) => {
-  const window = Dimensions.get("window");
+  const window = Dimensions.get('window');
 
   const { results } = list;
 
@@ -24,10 +24,10 @@ export const MovieList = ({ list }: IMovieList) => {
       borderRadius="$4"
       contentContainerStyle={{
         paddingVertical: 12,
-        paddingHorizontal: paddingHorizontal
+        paddingTop: 6,
+        paddingHorizontal,
       }}>
       <MovieListStyles gap={`${gap}px`}>
-
         {results ? (
           results.map((item: ResultItem) => {
             return (
@@ -51,8 +51,8 @@ export const MovieList = ({ list }: IMovieList) => {
 };
 
 const MovieListStyles = styled(YStack, {
-  flexWrap: "wrap",
+  flexWrap: 'wrap',
   flexDirection: 'row',
-  alignItems: "center",
-  justifyContent: "center"
+  alignItems: 'center',
+  justifyContent: 'center',
 });

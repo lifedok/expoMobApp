@@ -1,24 +1,15 @@
-import { Link, useGlobalSearchParams, useLocalSearchParams } from "expo-router";
-import { Text, Card, CardProps, Paragraph, YStack, styled } from "tamagui";
+import { Link } from 'expo-router';
+import Animated from 'react-native-reanimated';
+import { Text, Card, CardProps, Paragraph, YStack, styled } from 'tamagui';
 
+import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
-import { EPathRouteScreen } from "~/app/types/enums/route.enum";
-import { addToFavorite } from "~/app/store/reducer/data/data-slice";
-import { useAppDispatch } from "~/app/hooks";
-import Animated from "react-native-reanimated";
 
 interface IMovieItem extends CardProps {
   item: ResultItem;
 }
 export const MovieItem = (props: IMovieItem) => {
   const { item, ...cardProp } = props;
-  const dispatch = useAppDispatch();
-
-  const onChooseFavorite = (name: string | undefined): void => {
-    if (name) {
-      dispatch(addToFavorite({ item: { id: name } }));
-    }
-  };
 
   const name = item.title || item.name;
   return (
@@ -30,8 +21,8 @@ export const MovieItem = (props: IMovieItem) => {
         scale={1}
         hoverStyle={{ scale: 0.925 }}
         pressStyle={{ scale: 0.975 }}
-        overflow={'hidden'}
-        animation={'bouncy'}
+        overflow="hidden"
+        animation="bouncy"
         {...cardProp}>
         <Card.Header p={0}>
           <Animated.Image
@@ -41,12 +32,12 @@ export const MovieItem = (props: IMovieItem) => {
             sharedTransitionTag={`${item.media_type === 'movie' ? 'movie' : 'tv'}-${item.id}`}
           />
         </Card.Header>
-        <Card.Footer p={8} backgroundColor={"darkblue"}>
+        <Card.Footer p={8} backgroundColor="darkblue">
           <YStack>
-            <Text fontSize={20} color={'lightblue'}>
+            <Text fontSize={20} color="lightblue">
               {name}
             </Text>
-            <Paragraph theme={'alt2'}>
+            <Paragraph theme="alt2">
               {new Date(item.release_date! || item.first_air_date!).getFullYear()}
             </Paragraph>
           </YStack>
@@ -66,4 +57,4 @@ const CardItemStyles = styled(Card, {
   shadowRadius: 3.84,
 
   elevation: 5,
-})
+});

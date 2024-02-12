@@ -1,22 +1,7 @@
-import { YStack, styled } from 'tamagui';
+import React from 'react';
 
-import { MovieHeader } from './movies/movie-header/movie-header';
-import { MovieList } from './movies/movie-list/movie-list';
-import { useGetDataSelector } from "~/app/store/selectors";
+import MoviesPage from '~/app/pages/movies-page/movies-page';
 
-export default function Movies() {
-  const { trendingMovie } = useGetDataSelector();
-
-  return (
-    <Main flex={1}>
-      <MovieHeader />
-      <MovieList list={trendingMovie}/>
-    </Main>
-  );
+export default function Page(): React.JSX.Element {
+  return <MoviesPage />;
 }
-
-const Main = styled(YStack, {
-  name: 'Main',
-  tag: 'main',
-  flexDirection: 'column',
-});
