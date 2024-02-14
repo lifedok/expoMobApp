@@ -52,7 +52,6 @@ export default function FavoritesPage(): React.JSX.Element {
                         alt={item.title || item.name}
                         style={{ width: 60, height: 60 }}
                         source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
-                        sharedTransitionTag={`${item.media_type === 'movie' ? 'movie' : 'tv'}-${item.id}`}
                       />
                     );
                   }}

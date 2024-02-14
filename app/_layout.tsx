@@ -1,6 +1,6 @@
 import { onAuthStateChanged, User } from '@firebase/auth';
 import { useFonts } from 'expo-font';
-import { Slot, useRouter } from 'expo-router';
+import { Slot, useRouter, SplashScreen } from "expo-router";
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
@@ -12,6 +12,8 @@ import { store } from '~/app/store';
 import { useGetUiSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
+
+SplashScreen.preventAutoHideAsync();
 
 const InitialLayout = () => {
   const router = useRouter();
@@ -49,10 +51,13 @@ export default function RootLayout() {
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
   });
 
-  if (!loaded) {
-    return null;
-  }
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
+  if (!loaded) return null;
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>

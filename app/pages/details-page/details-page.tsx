@@ -3,7 +3,7 @@ import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import { ImageBackground } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { Button, H1, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
+import { Button, H4, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
@@ -21,7 +21,6 @@ export default function DetailsPage({ id }: IDetailsPage): React.JSX.Element {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  // const { id } = useLocalSearchParams<{ id: string }>();
   const { trendingMovies, favorites } = useGetDataSelector();
 
   const movieItem: ResultItem | undefined = trendingMovies.results.find((item) => item.id === +id);
@@ -85,23 +84,23 @@ export default function DetailsPage({ id }: IDetailsPage): React.JSX.Element {
         </ImageBackground>
 
         <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: 10 }}>
-          {/*<H1 color="$blue7">{movieItem?.title || movieItem?.name}</H1>*/}
-
           {movieItem?.release_date ? (
             <Text fontSize={16}>Release date: {movieItem?.release_date}</Text>
           ) : (
             <Text fontSize={16}>The date of the first broadcast: {movieItem?.first_air_date}</Text>
           )}
 
+          <H4 color="$blue9" mt={'$2'}>{movieItem?.title || movieItem?.name}</H4>
           {movieItem?.vote_average ? (
-            <Paragraph fontSize={16}>
+            <Paragraph fontSize={12} mb={'$2'}>
               Average number of votes: {movieItem?.vote_average.toFixed(1)}
             </Paragraph>
           ) : (
             <Text />
           )}
 
-          <Text fontSize={16}>{movieItem?.overview}</Text>
+          <Text fontSize={16} mt={'$3'} mb={'$2'} fontStyle={'italic'}>{movieItem?.overview}</Text>
+
         </YStack>
       </ScrollView>
     </Main>

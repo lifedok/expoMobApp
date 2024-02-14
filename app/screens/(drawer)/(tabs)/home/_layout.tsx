@@ -9,16 +9,12 @@ export default function Page(): React.JSX.Element {
       <Drawer.Screen
         options={{
           headerTitle: 'Movies',
-          headerShown: true,
-          headerLeft: () => <DrawerToggleButton />,
+          headerShown: false,
         }}
       />
 
       <Stack
         screenOptions={{
-          headerStyle: {
-            backgroundColor: 'rgba(255,224,71,0.31)',
-          },
           headerTintColor: '#000',
           headerBackTitle: 'Back',
         }}>
@@ -26,13 +22,14 @@ export default function Page(): React.JSX.Element {
           name="movies"
           options={{
             headerTitle: 'Movies',
-            headerShown: false,
+            headerLeft: () => <DrawerToggleButton />,
           }}
         />
         <Stack.Screen
           name="[id]"
           options={{
-            headerTitle: 'List item',
+            title: '',
+            headerShown: true,
           }}
         />
       </Stack>

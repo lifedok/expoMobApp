@@ -3,7 +3,7 @@ import Animated from 'react-native-reanimated';
 import { Text, Card, CardProps, Paragraph, YStack, styled } from 'tamagui';
 
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
-import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
+import { ResultItem } from "~/app/types/interfaces/apiresults.interface";
 
 interface IMovieItem extends CardProps {
   item: ResultItem;
@@ -29,7 +29,6 @@ export const MovieItem = (props: IMovieItem) => {
             source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
             alt={item.title}
             style={{ width: cardProp.width as number, height: 200 }}
-            sharedTransitionTag={`${item.media_type === 'movie' ? 'movie' : 'tv'}-${item.id}`}
           />
         </Card.Header>
         <Card.Footer p={8} backgroundColor="darkblue">
