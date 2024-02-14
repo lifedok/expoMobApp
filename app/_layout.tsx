@@ -1,5 +1,4 @@
 import { onAuthStateChanged, User } from '@firebase/auth';
-import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Slot, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
@@ -13,7 +12,6 @@ import { store } from '~/app/store';
 import { useGetUiSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
-import { queryClient } from '~/queryClient';
 
 const InitialLayout = () => {
   const router = useRouter();
@@ -59,9 +57,7 @@ export default function RootLayout() {
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Provider store={store}>
-          <QueryClientProvider client={queryClient}>
-            <InitialLayout />
-          </QueryClientProvider>
+          <InitialLayout />
         </Provider>
       </GestureHandlerRootView>
     </TamaguiProvider>

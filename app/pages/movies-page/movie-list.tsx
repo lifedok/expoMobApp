@@ -1,3 +1,4 @@
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Dimensions } from 'react-native';
 import { ScrollView, Text, styled, YStack } from 'tamagui';
 
@@ -10,12 +11,15 @@ interface IMovieList {
 }
 
 export const MovieList = ({ list }: IMovieList) => {
+  const bottomTabBarHeight: number = useBottomTabBarHeight();
+
   const window = Dimensions.get('window');
 
   const { results } = list;
 
   const paddingHorizontal: number = 6;
   const gap: number = 8;
+  const paddingTop: number = 6;
   return (
     <ScrollView
       showsVerticalScrollIndicator
@@ -24,8 +28,9 @@ export const MovieList = ({ list }: IMovieList) => {
       borderRadius="$4"
       contentContainerStyle={{
         paddingVertical: 12,
-        paddingTop: 6,
+        paddingTop,
         paddingHorizontal,
+        paddingBottom: bottomTabBarHeight + paddingTop,
       }}>
       <MovieListStyles gap={`${gap}px`}>
         {results ? (

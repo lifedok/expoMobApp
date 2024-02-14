@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Link } from 'expo-router';
 import React from 'react';
 import Animated from 'react-native-reanimated';
@@ -14,11 +15,13 @@ import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 export default function FavoritesPage(): React.JSX.Element {
   const { favorites } = useGetDataSelector();
   const dispatch = useAppDispatch();
+  const bottomTabBarHeight: number = useBottomTabBarHeight();
 
   const onRemoveFavorite = (movieItem: ResultItem): void => {
     dispatch(removeFromFavorite({ item: movieItem }));
   };
 
+  const paddingTop: number = 12;
   return (
     <ScrollView
       showsVerticalScrollIndicator
@@ -26,8 +29,9 @@ export default function FavoritesPage(): React.JSX.Element {
       backgroundColor="$backgroundColor"
       borderRadius="$4"
       contentContainerStyle={{
-        paddingVertical: 12,
+        paddingTop,
         paddingHorizontal: 6,
+        paddingBottom: bottomTabBarHeight + paddingTop,
       }}>
       <FavoritesStyles>
         {favorites.length ? (

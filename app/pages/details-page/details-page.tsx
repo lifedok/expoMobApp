@@ -10,6 +10,7 @@ import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data
 import { useGetDataSelector } from '~/app/store/selectors';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { Main } from '~/tamagui.config';
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 interface IDetailsPage {
   id: string;
@@ -58,6 +59,8 @@ export default function DetailsPage({ id }: IDetailsPage): React.JSX.Element {
     </Button>
   );
 
+  const bottomTabBarHeight: number = useBottomTabBarHeight();
+
   return (
     <Main>
       <Stack.Screen
@@ -67,7 +70,7 @@ export default function DetailsPage({ id }: IDetailsPage): React.JSX.Element {
           headerRight: () => <FavoriteButton />,
         }}
       />
-      <ScrollView>
+      <ScrollView paddingBottom={bottomTabBarHeight}>
         <ImageBackground
           source={{
             uri: `https://image.tmdb.org/t/p/w400${movieItem?.backdrop_path}`,
