@@ -35,6 +35,7 @@ const Main = styled(YStack, {
   name: 'Main',
   tag: 'main',
   flexDirection: 'column',
+  backgroundColor: '$blue0'
 });
 
 export const InputContainer = styled(YStack, {

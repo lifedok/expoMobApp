@@ -20,6 +20,7 @@ export const MovieList = ({ list }: IMovieList) => {
   const paddingHorizontal: number = 6;
   const gap: number = 8;
   const paddingTop: number = 6;
+
   return (
     <ScrollView
       showsVerticalScrollIndicator
@@ -33,7 +34,7 @@ export const MovieList = ({ list }: IMovieList) => {
         paddingBottom: bottomTabBarHeight + paddingTop,
       }}>
       <MovieListStyles gap={`${gap}px`}>
-        {results ? (
+        {results && results.length > 0 ? (
           results.map((item: ResultItem) => {
             return (
               <MovieItem
@@ -48,7 +49,7 @@ export const MovieList = ({ list }: IMovieList) => {
             );
           })
         ) : (
-          <Text>No results</Text>
+          <Text fontSize={16} color={'$blue10'}>No results</Text>
         )}
       </MovieListStyles>
     </ScrollView>

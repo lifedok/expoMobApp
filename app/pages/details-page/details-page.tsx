@@ -6,9 +6,11 @@ import Animated from 'react-native-reanimated';
 import { Button, H4, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
+import { getImagePath, getMovieName } from "~/app/pages/shared/helpers";
+import { getMovieDetails } from '~/app/services/api';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
-import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
+import { MediaType, ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { Main } from '~/tamagui.config';
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
@@ -70,37 +72,35 @@ export default function DetailsPage({ id }: IDetailsPage): React.JSX.Element {
         }}
       />
       <ScrollView paddingBottom={bottomTabBarHeight}>
-        <ImageBackground
-          source={{
-            uri: `https://image.tmdb.org/t/p/w400${movieItem?.backdrop_path}`,
-          }}>
+        <ImageBackground source={getImagePath({ path: item?.backdrop_path, image: 'bg' })}>
           <Animated.Image
             borderRadius={6}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w400${movieItem?.poster_path}`,
-            }}
+            source={getImagePath({ path: item?.poster_path, image: 'poster' })}
             style={{ width: 200, height: 300, margin: 10 }}
           />
         </ImageBackground>
 
         <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: 10 }}>
-          {movieItem?.release_date ? (
-            <Text fontSize={16}>Release date: {movieItem?.release_date}</Text>
+          {item?.release_date ? (
+            <Text fontSize={16}>Release date: {item?.release_date}</Text>
           ) : (
-            <Text fontSize={16}>The date of the first broadcast: {movieItem?.first_air_date}</Text>
+            <Text fontSize={16}>The date of the first broadcast: {item?.first_air_date}</Text>
           )}
 
-          <H4 color="$blue9" mt={'$2'}>{movieItem?.title || movieItem?.name}</H4>
-          {movieItem?.vote_average ? (
-            <Paragraph fontSize={12} mb={'$2'}>
-              Average number of votes: {movieItem?.vote_average.toFixed(1)}
+          <H4 color="$blue9" mt="$2">
+            {getMovieName(item)}
+          </H4>
+          {item?.vote_average ? (
+            <Paragraph fontSize={12} mb="$2">
+              Average number of votes: {item?.vote_average.toFixed(1)}
             </Paragraph>
           ) : (
             <Text />
           )}
 
-          <Text fontSize={16} mt={'$3'} mb={'$2'} fontStyle={'italic'}>{movieItem?.overview}</Text>
-
+          <Text fontSize={16} mt="$3" mb="$2" fontStyle="italic">
+            {item?.overview}
+          </Text>
         </YStack>
       </ScrollView>
     </Main>

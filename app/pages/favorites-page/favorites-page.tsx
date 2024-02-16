@@ -7,6 +7,7 @@ import { YStack, Text, styled, ScrollView, ListItem, Button } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import { FavoriteItemInfo } from '~/app/pages/favorites-page/favorite-item-info';
+import { getImagePath } from '~/app/pages/shared/helpers';
 import { removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
@@ -51,7 +52,11 @@ export default function FavoritesPage(): React.JSX.Element {
                       <Animated.Image
                         alt={item.title || item.name}
                         style={{ width: 60, height: 60 }}
-                        source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+                        source={getImagePath({
+                          path: item.poster_path,
+                          image: 'poster',
+                          width: 500,
+                        })}
                       />
                     );
                   }}
