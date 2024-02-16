@@ -1,4 +1,6 @@
 import { Feather, Ionicons } from '@expo/vector-icons';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useQuery } from '@tanstack/react-query';
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import { ImageBackground } from 'react-native';
@@ -12,27 +14,34 @@ import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data
 import { useGetDataSelector } from '~/app/store/selectors';
 import { MediaType, ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { Main } from '~/tamagui.config';
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
-interface IDetailsPage {
+export interface IDetailsPage {
   id: string;
+  type: MediaType;
 }
 
-export default function DetailsPage({ id }: IDetailsPage): React.JSX.Element {
+export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Element {
   const theme = useTheme();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { trendingMovies, favorites } = useGetDataSelector();
 
-  const movieItem: ResultItem | undefined = trendingMovies.results.find((item) => item.id === +id);
+  const localMovieItem: ResultItem | undefined = trendingMovies.results.find(
+    (item) => item.id === +id
+  );
 
+  const movieItemResult = useQuery<ResultItem>({
+    queryKey: [`detail${type}`, id],
+    queryFn: () => getMovieDetails(+id, type),
+    enabled: !localMovieItem?.id,
+  });
+
+  const item = localMovieItem ? localMovieItem : movieItemResult?.data;
   const isFavorite = favorites.some((item) => item.id === +id);
 
   const toggleFavorite = () => {
-    isFavorite
-      ? dispatch(removeFromFavorite({ item: movieItem }))
-      : dispatch(addToFavorite({ item: movieItem }));
+    return isFavorite ? dispatch(removeFromFavorite({ item })) : dispatch(addToFavorite({ item }));
   };
 
   const BackButton = () => (

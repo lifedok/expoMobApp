@@ -13,7 +13,14 @@ export const MovieItem = (props: IMovieItem) => {
   const { item, ...cardProp } = props;
 
   return (
-    <Link href={`${EPathRouteScreen.HOME}/${item.id}` as never} asChild>
+    <Link
+      asChild
+      href={
+        {
+          pathname: `${EPathRouteScreen.HOME}/${item.id}`,
+          params: { type: item?.media_type },
+        } as never
+      }>
       <CardItemStyles
         elevate
         width={200}

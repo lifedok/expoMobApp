@@ -1,6 +1,7 @@
 import { onAuthStateChanged, User } from '@firebase/auth';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
-import { Slot, useRouter, SplashScreen } from "expo-router";
+import { Slot, useRouter, SplashScreen } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
@@ -12,6 +13,7 @@ import { store } from '~/app/store';
 import { useGetUiSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
+import { queryClient } from '~/queryClient';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -61,9 +63,11 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Provider store={store}>
-          <InitialLayout />
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <InitialLayout />
+          </Provider>
+        </QueryClientProvider>
       </GestureHandlerRootView>
     </TamaguiProvider>
   );

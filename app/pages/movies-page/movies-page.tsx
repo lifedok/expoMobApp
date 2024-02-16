@@ -1,12 +1,22 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { YStack, styled, Spinner, Input } from 'tamagui';
 
+import useDebounce from '~/app/hooks/useDebounce';
 import { MovieList } from '~/app/pages/movies-page/movie-list';
+import { getSearchResults } from '~/app/services/api';
 import { useGetDataSelector } from '~/app/store/selectors';
 
 export default function MoviesPage(): React.JSX.Element {
   const { trendingMovies, isLoadingTrendingMovies } = useGetDataSelector();
-  const [searchString, setSearchString] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const debouncedString = useDebounce(searchValue, 300);
+
+  const searchQuery = useQuery({
+    queryKey: ['search', debouncedString],
+    queryFn: () => getSearchResults(debouncedString),
+    enabled: debouncedString.length > 0,
+  });
 
   return (
     <Main>
@@ -16,15 +26,15 @@ export default function MoviesPage(): React.JSX.Element {
           placeholderTextColor="#000"
           borderWidth={1}
           size="$4"
-          value={searchString}
-          onChangeText={(text) => setSearchString(text)}
+          value={searchValue}
+          onChangeText={(v) => setSearchValue(v)}
         />
       </InputContainer>
 
-      {isLoadingTrendingMovies ? (
+      {isLoadingTrendingMovies || searchQuery.isLoading ? (
         <Spinner py={14} size="large" color="$blue10" width="100%" />
       ) : (
-        <MovieList list={trendingMovies} />
+        <MovieList list={searchQuery.data ? searchQuery.data : trendingMovies} />
       )}
     </Main>
   );

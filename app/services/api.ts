@@ -1,10 +1,26 @@
-import { TrendingResult } from '~/app/types/interfaces/apiresults.interface';
-
+import { MediaType, TrendingResult } from '~/app/types/interfaces/apiresults.interface';
 const API_KEY = process.env.EXPO_PUBLIC_KEY;
 
-export const getTrending = async (page: number = 1): Promise<TrendingResult> => {
-  const response = await fetch(`https://api.themoviedb.org/3/trending/all/day?language=en-US&api_key=${API_KEY}&page=${page}`);
-  const json = await response.json();
+export const getSearchResults = async (query: string): Promise<TrendingResult> => {
+  console.log('SEARCH: ', query);
 
-  return json;
+  const response = await fetch(
+    `https://api.themoviedb.org/3/search/multi?language=en-US&api_key=${API_KEY}&query=${encodeURIComponent(
+      query
+    )}`
+  );
+  if (!response.ok) throw new Error('Failed to fetch getSearchResults');
+
+  return await response.json();
+};
+
+export const getMovieDetails = async (id: number, type: MediaType): Promise<any> => {
+
+  const response = await fetch(
+    `https://api.themoviedb.org/3/${type ?? MediaType.Movie}/${id}?api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error('Failed to fetch getMovieDetails');
+
+  return await response.json();
 };
