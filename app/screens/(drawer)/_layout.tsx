@@ -1,16 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Drawer } from 'expo-router/drawer';
-import { useEffect } from 'react';
-
-import { useAppDispatch } from '~/app/hooks';
-import { fetchTrendingMovies } from '~/app/store/reducer/data/data-actions.thunk';
 
 const DrawerLayout = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchTrendingMovies({ page: 1 }));
-  }, []);
 
   return (
     <Drawer>
