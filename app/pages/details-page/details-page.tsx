@@ -8,7 +8,7 @@ import Animated from 'react-native-reanimated';
 import { Button, H4, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
-import { getImagePath, getMovieName } from "~/app/pages/shared/helpers";
+import { getImagePath, getMovieName } from '~/app/pages/shared/helpers';
 import { getMovieDetails } from '~/app/services/api';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
@@ -25,11 +25,9 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { trendingMovies, favorites } = useGetDataSelector();
+  const { movieList, favorites } = useGetDataSelector();
 
-  const localMovieItem: ResultItem | undefined = trendingMovies.results.find(
-    (item) => item.id === +id
-  );
+  const localMovieItem: ResultItem | undefined = movieList.find((item) => item.id === +id);
 
   const movieItemResult = useQuery<ResultItem>({
     queryKey: [`detail${type}`, id],

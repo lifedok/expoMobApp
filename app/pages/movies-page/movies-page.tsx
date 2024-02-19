@@ -1,75 +1,71 @@
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-import { YStack, styled, Spinner, Input } from 'tamagui';
+import { FlatList, Dimensions } from 'react-native';
+import { YStack, styled, Input, H4 } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import useDebounce from '~/app/hooks/useDebounce';
-import { MovieList } from '~/app/pages/movies-page/movie-list';
-import { getImagePath, getMovieName } from '~/app/pages/shared/helpers';
+import { MovieItem } from '~/app/pages/movies-page/movie-item';
+import { Spinner } from '~/app/pages/movies-page/spinner';
 import { getSearchResults } from '~/app/services/api';
 import { fetchTrendingMovies } from '~/app/store/reducer/data/data-actions.thunk';
 import { useGetDataSelector } from '~/app/store/selectors';
+import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 
 export default function MoviesPage(): React.JSX.Element {
   const dispatch = useAppDispatch();
+  const window = Dimensions.get('window');
 
   const { movieList, isLoadingTrendingMovies } = useGetDataSelector();
   const [searchValue, setSearchValue] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const debouncedString = useDebounce(searchValue, 300);
+  const debouncedString = useDebounce(searchValue, 200);
+
   const searchQuery = useQuery({
     queryKey: ['search', debouncedString],
     queryFn: () => getSearchResults(debouncedString),
     enabled: debouncedString.length > 0,
   });
 
+  const paddingHorizontal: number = 6;
+  const gap: number = 6;
+  const paddingTop: number = 6;
+
+  const bottomTabBarHeight: number = useBottomTabBarHeight();
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     dispatch(fetchTrendingMovies({ page: currentPage }));
   }, [currentPage]);
 
   const loadMorePage = () => {
-    setCurrentPage(currentPage + 1);
+    if (!isLoadingTrendingMovies || !searchQuery.data?.results) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
-  const renderItem = (props: any) => {
-    const { item } = props;
+  const renderItem = (item: ResultItem) => {
+    const width = window.width / 2 - (gap + paddingHorizontal / 2);
     return (
-      <View style={styles.itemWrapperStyle}>
-        <Image
-          style={styles.itemImageStyle}
-          source={getImagePath({
-            path: item.poster_path,
-            image: 'poster',
-            width: 200,
-          })}
-        />
-        <View style={styles.contentWrapperStyle}>
-          <Text style={styles.txtNameStyle}>{`${getMovieName(item)}`}</Text>
-          {/*<Text style={styles.txtEmailStyle}>{item.email}</Text>*/}
-        </View>
-      </View>
+      <MovieItem
+        item={item}
+        width={width}
+        key={item.id}
+        animation="bouncy"
+        scale={0.9}
+        hoverStyle={{ scale: 0.925 }}
+        pressStyle={{ scale: 0.875 }}
+      />
     );
   };
 
   const renderLoader = () => {
     return (
-      <View style={{ width: '100%', height: 42 }}>
-        {isLoadingTrendingMovies ? (
-          <View style={LoaderWithInfoStyles.content}>
-            <ActivityIndicator animating size="large" color="#5868F9" style={{ marginTop: 20 }} />
-            <Text style={{ marginTop: 12, color: '#5868F9' }}>Loading...</Text>
-          </View>
-        ) : null}
-      </View>
+      <LoaderWrapper>
+        {isLoadingTrendingMovies ? <Spinner /> : null}
+        {searchValue.length > 0 && !searchQuery?.data?.results.length && <H4>No results</H4>}
+      </LoaderWrapper>
     );
   };
 
@@ -86,21 +82,29 @@ export default function MoviesPage(): React.JSX.Element {
         />
       </InputContainer>
 
+      {searchQuery.isLoading && <Spinner />}
+
       <FlatList
-        data={movieList}
-        renderItem={(item) => renderItem(item)}
+        data={searchQuery.data?.results ? searchQuery.data.results : movieList}
+        renderItem={({ item }) => renderItem(item)}
         keyExtractor={(item, index) => `${item.id}_${index}`}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        initialNumToRender={10}
+        contentContainerStyle={{
+          paddingTop,
+          paddingHorizontal,
+          paddingVertical: 12,
+          paddingBottom: bottomTabBarHeight + paddingTop,
+          borderRadius: 12,
+          width: '100%',
+          gap,
+        }}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        style={{ flex: 1 }}
+        horizontal={false}
+        numColumns={2}
         ListFooterComponent={renderLoader}
         onEndReached={loadMorePage}
-        onEndReachedThreshold={0}
       />
-
-      {/*{isLoadingTrendingMovies || searchQuery.isLoading ? (*/}
-      {/*  <Spinner py={14} size="large" color="$blue10" width="100%" />*/}
-      {/*) : (*/}
-      {/*  <MovieList list={searchQuery.data ? searchQuery.data : trendingMovies} />*/}
-      {/*)}*/}
     </Main>
   );
 }
@@ -121,37 +125,9 @@ export const InputContainer = styled(YStack, {
   justifyContent: 'flex-end',
 });
 
-const styles = StyleSheet.create({
-  itemWrapperStyle: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-  },
-  itemImageStyle: {
-    width: 50,
-    height: 50,
-    marginRight: 16,
-  },
-  contentWrapperStyle: {
-    justifyContent: 'space-around',
-  },
-  txtNameStyle: {
-    fontSize: 16,
-  },
-  txtEmailStyle: {
-    color: '#777',
-  },
-  loaderStyle: {
-    marginVertical: 16,
-    alignItems: 'center',
-  },
-});
-
-const LoaderWithInfoStyles = StyleSheet.create({
-  content: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+const LoaderWrapper = styled(YStack, {
+  width: '100%',
+  height: 42,
+  justifyContent: 'center',
+  alignItems: 'center',
 });

@@ -2,8 +2,6 @@ import { MediaType, TrendingResult } from '~/app/types/interfaces/apiresults.int
 const API_KEY = process.env.EXPO_PUBLIC_KEY;
 
 export const getSearchResults = async (query: string): Promise<TrendingResult> => {
-  console.log('SEARCH: ', query);
-
   const response = await fetch(
     `https://api.themoviedb.org/3/search/multi?language=en-US&api_key=${API_KEY}&query=${encodeURIComponent(
       query
