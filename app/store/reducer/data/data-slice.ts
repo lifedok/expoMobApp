@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 import { DataSliceType } from '~/app/store/reducer/data/data-slice.type';
 import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
@@ -10,6 +10,7 @@ const initialState: DataSliceType = {
     total_pages: 1,
     total_results: 1,
   },
+  movieList: [],
   isLoadingTrendingMovies: false,
   favorites: [],
   isDataLoading: false,
@@ -21,6 +22,10 @@ export const dataSlice = createSlice({
   reducers: {
     loadTrendingMovies: (state, action) => {
       state.trendingMovies = action.payload;
+    },
+    loadMovieList: (state, action) => {
+      const data = [...new Set(state.movieList.concat(action.payload))];
+      state.movieList = data;
     },
     isLoadingTrendingMovies: (state, action) => {
       state.isLoadingTrendingMovies = action.payload;
@@ -42,4 +47,4 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { loadTrendingMovies, isLoadingTrendingMovies, addToFavorite, removeFromFavorite } = dataSlice.actions;
+export const { loadTrendingMovies, isLoadingTrendingMovies, addToFavorite, removeFromFavorite, loadMovieList } = dataSlice.actions;
