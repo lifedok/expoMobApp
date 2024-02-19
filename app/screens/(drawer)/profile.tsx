@@ -1,19 +1,7 @@
-import { YStack, H2, Separator, Theme } from 'tamagui';
+import React from 'react';
 
-const Page = () => {
-  return (
-    <Theme name="light">
-      <YStack flex={1} alignItems="center" justifyContent="center">
-        <H2>Profile</H2>
-        <Separator />
-      </YStack>
+import ProfilePage from '~/app/pages/profile-page/profile-page';
 
-      {/*<Tabs>*/}
-      {/*  <Tabs.Screen name="Home" component={HomeScreen} />*/}
-      {/*  <Tabs.Screen name="Settings" component={SettingsScreen} />*/}
-      {/*</Tabs>*/}
-    </Theme>
-  );
-};
-
-export default Page;
+export default function Page(): React.JSX.Element {
+  return <ProfilePage />;
+}

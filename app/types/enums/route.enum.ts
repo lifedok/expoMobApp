@@ -12,6 +12,7 @@ export const EPathRouteScreen = {
 
   HOME: `${EPathRoute.TABS}/home`,
   LIST: `${EPathRoute.TABS}/list`,
+  MOVIES: `${EPathRoute.TABS}/movies`,
   DETAILS: `${EPathRoute.TABS}/home/details`,
 };
 

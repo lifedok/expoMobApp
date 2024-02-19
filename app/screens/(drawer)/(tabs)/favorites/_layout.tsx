@@ -4,8 +4,7 @@ import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 import { Pressable } from 'react-native';
 
-import Notifications from './notifications';
-
+import FavoritesPage from '~/app/pages/favorites-page/favorites-page';
 import { firebaseAuth } from '~/app/utils/firebase';
 
 export const LogoutButton = () => {
@@ -28,14 +27,14 @@ export default function Page() {
     <>
       <Drawer.Screen
         options={{
-          headerTitle: 'Notifications',
+          headerTitle: 'Favorites',
           headerShown: true,
           headerLeft: () => <DrawerToggleButton />,
           headerRight: () => <LogoutButton />,
         }}
       />
 
-      <Notifications />
+      <FavoritesPage />
     </>
   );
 }

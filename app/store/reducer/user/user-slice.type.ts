@@ -2,10 +2,12 @@ import { User as IUser } from '@firebase/auth';
 
 import { AuthorizationStatus } from '~/app/types/enums/route.enum';
 
-export type UserProcessType = {
+export type UserSliceType = {
   user: IUser | null;
   userAuth: AuthDataType | null;
   authorizationStatus: AuthorizationStatus;
+  testUserData: any;
+  isLoading: boolean;
   errorText?: string;
 };
 

@@ -1,5 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { BlurView } from 'expo-blur';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { StyleSheet } from 'react-native';
@@ -7,8 +7,8 @@ import { StyleSheet } from 'react-native';
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
-}) {
-  return <FontAwesome size={28} style={styles.tabBarIcon} {...props} />;
+}): React.JSX.Element {
+  return <FontAwesome size={24} style={styles.tabBarIcon} {...props} />;
 }
 
 export default function TabsLayout(): React.ReactNode {
@@ -17,25 +17,39 @@ export default function TabsLayout(): React.ReactNode {
       screenOptions={{
         tabBarActiveTintColor: 'black',
         headerShown: true,
+        tabBarStyle: {
+          position: 'absolute',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          height: 60,
+        },
+        tabBarBackground: (): React.ReactNode => (
+          <BlurView
+            intensity={60}
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              overflow: 'hidden',
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            }}
+          />
+        ),
       }}>
       <Tabs.Screen
         name="home"
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: '',
           title: 'Home tab',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="notifications"
+        name="favorites"
         options={{
-          tabBarLabel: 'Notifications',
-          title: 'Notifications tab',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
-          ),
+          tabBarLabel: '',
+          title: 'Favorites tab',
+          tabBarIcon: ({ color }) => <TabBarIcon name="heart" color={color} />,
         }}
       />
     </Tabs>
@@ -47,6 +61,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   tabBarIcon: {
-    marginBottom: -3,
+    marginBottom: -28,
   },
 });

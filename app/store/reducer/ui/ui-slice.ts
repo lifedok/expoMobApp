@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { UiSliceType } from '~/app/store/reducer/ui/ui-slice.type';
 import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
-import { UiProcessType } from '~/app/types/ui-process.type';
 
-const initialState: UiProcessType = {
+const initialState: UiSliceType = {
   theme: 'light',
 };
 
-export const uiProcess = createSlice({
+export const uiSlice = createSlice({
   name: ReducerNameEnum.UI,
   initialState,
   reducers: {
@@ -21,4 +21,4 @@ export const uiProcess = createSlice({
   },
 });
 
-export const { toggleUiTheme } = uiProcess.actions;
+export const { toggleUiTheme } = uiSlice.actions;

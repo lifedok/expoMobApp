@@ -1,3 +1,3 @@
-export type UiProcessType = {
+export type UiSliceType = {
   theme: 'light' | 'dark';
 };

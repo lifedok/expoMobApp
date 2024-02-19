@@ -3,41 +3,33 @@ import { Stack } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 
-export default function Page() {
+export default function Page(): React.JSX.Element {
   return (
     <>
       <Drawer.Screen
         options={{
-          headerTitle: 'Home',
-          headerShown: true,
-          headerLeft: () => <DrawerToggleButton />,
+          headerTitle: 'Movies',
+          headerShown: false,
         }}
       />
 
       <Stack
         screenOptions={{
-          headerStyle: {
-            backgroundColor: '#6c47ff',
-          },
-          headerTintColor: '#fff',
+          headerTintColor: '#000',
           headerBackTitle: 'Back',
         }}>
         <Stack.Screen
-          name="list"
+          name="movies"
           options={{
-            headerTitle: 'List',
+            headerTitle: 'Movies',
+            headerLeft: () => <DrawerToggleButton />,
           }}
         />
         <Stack.Screen
           name="[id]"
           options={{
-            headerTitle: 'List item',
-          }}
-        />
-        <Stack.Screen
-          name="details"
-          options={{
-            headerTitle: 'details',
+            title: '',
+            headerShown: true,
           }}
         />
       </Stack>
