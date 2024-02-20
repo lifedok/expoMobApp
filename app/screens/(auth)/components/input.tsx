@@ -1,6 +1,24 @@
-import { styled, Input as TInput } from 'tamagui';
+import React, { ReactElement } from 'react';
+import { styled, Input as TInput, InputProps, Text, YStack } from 'tamagui';
 
-export const Input = styled(TInput, {
+export interface IInput extends InputProps {
+  errorText?: string;
+}
+export default function Input(props: IInput): ReactElement {
+  const { errorText, ...restProps } = props;
+  return (
+    <Wrapper>
+      <InputStyles {...restProps} mb="$0" />
+      {errorText ? <TextContainer>{errorText}</TextContainer> : null}
+    </Wrapper>
+  );
+}
+
+const Wrapper = styled(YStack, {
+  width: '100%',
+  mb: '$2',
+});
+export const InputStyles = styled(TInput, {
   w: '100%',
   h: '$4',
   m: '$0',
@@ -8,4 +26,9 @@ export const Input = styled(TInput, {
   borderWidth: '$1',
   borderColor: '$green8',
   color: '$green12',
+});
+
+const TextContainer = styled(Text, {
+  fontSize: 12,
+  color: 'red',
 });

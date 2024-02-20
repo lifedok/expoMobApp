@@ -4,7 +4,7 @@ import { ScrollView as TScrollView, YStack as TYStack, styled } from 'tamagui';
 export default function Wrapper({ children }: { children: ReactNode }): ReactElement {
   return (
     <YStack>
-      <ScrollView>{children}</ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">{children}</ScrollView>
     </YStack>
   );
 }
