@@ -1,10 +1,20 @@
 import { Ionicons } from '@expo/vector-icons';
+import { colorTokens } from '@tamagui/themes';
 import { Drawer } from 'expo-router/drawer';
 
-const DrawerLayout = () => {
+import CustomDrawer from '~/app/components/custom-drawer/custom-drawer';
 
+const DrawerLayout = () => {
   return (
-    <Drawer>
+    <Drawer
+      initialRouteName="(tabs)"
+      drawerContent={CustomDrawer}
+      screenOptions={{
+        drawerHideStatusBarOnOpen: true,
+        drawerActiveBackgroundColor: colorTokens.dark.blue.blue7,
+        drawerActiveTintColor: '#fff',
+        drawerLabelStyle: { marginLeft: -20 },
+      }}>
       <Drawer.Screen
         name="(tabs)"
         options={{
