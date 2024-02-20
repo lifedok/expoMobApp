@@ -6,7 +6,7 @@ import { YStack, styled, Input, H4 } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import useDebounce from '~/app/hooks/useDebounce';
-import { MovieItem } from '~/app/pages/movies-page/movie-item';
+import MovieItem from '~/app/pages/movies-page/movie-item';
 import { Spinner } from '~/app/pages/movies-page/spinner';
 import { getSearchResults } from '~/app/services/api';
 import { fetchTrendingMovies } from '~/app/store/reducer/data/data-actions.thunk';
@@ -45,7 +45,7 @@ export default function MoviesPage(): React.JSX.Element {
     }
   };
 
-  const renderItem = (item: ResultItem) => {
+  const _renderItem = (item: ResultItem) => {
     const width = window.width / 2 - (gap + paddingHorizontal / 2);
     return (
       <MovieItem
@@ -60,7 +60,7 @@ export default function MoviesPage(): React.JSX.Element {
     );
   };
 
-  const renderLoader = () => {
+  const _renderLoader = () => {
     return (
       <LoaderWrapper>
         {isLoadingTrendingMovies ? <Spinner /> : null}
@@ -86,9 +86,9 @@ export default function MoviesPage(): React.JSX.Element {
 
       <FlatList
         data={searchQuery.data?.results ? searchQuery.data.results : movieList}
-        renderItem={({ item }) => renderItem(item)}
+        renderItem={({ item }) => _renderItem(item)}
         keyExtractor={(item, index) => `${item.id}_${index}`}
-        initialNumToRender={10}
+        initialNumToRender={5}
         contentContainerStyle={{
           paddingTop,
           paddingHorizontal,
@@ -102,7 +102,7 @@ export default function MoviesPage(): React.JSX.Element {
         style={{ flex: 1 }}
         horizontal={false}
         numColumns={2}
-        ListFooterComponent={renderLoader}
+        ListFooterComponent={_renderLoader}
         onEndReached={loadMorePage}
       />
     </Main>

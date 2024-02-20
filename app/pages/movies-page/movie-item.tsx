@@ -1,4 +1,5 @@
 import { Link } from 'expo-router';
+import { memo } from 'react';
 import Animated from 'react-native-reanimated';
 import { Text, Card, CardProps, Paragraph, YStack, styled } from 'tamagui';
 
@@ -9,7 +10,7 @@ import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 interface IMovieItem extends CardProps {
   item: ResultItem;
 }
-export const MovieItem = (props: IMovieItem) => {
+const MovieItem = (props: IMovieItem) => {
   const { item, ...cardProp } = props;
 
   return (
@@ -54,6 +55,8 @@ export const MovieItem = (props: IMovieItem) => {
     </Link>
   );
 };
+
+export default memo(MovieItem);
 
 const CardItemStyles = styled(Card, {
   shadowColor: '#000',
