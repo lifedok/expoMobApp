@@ -12,50 +12,48 @@ import {
   LinkComposite,
   Wrapper,
 } from '~/app/screens/(auth)/components';
-import { ForgotFormData } from '~/app/types/auth-form-data';
+import { ForgotFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules } from '~/app/utils/patterns';
+import InfoBar from "~/app/components/info-bar/info-bar";
 
 export default function Forgot() {
+  const [isFbLoading, setFbLoading] = useState<boolean>(false);
+  const [hasFbErrors, setFbErrors] = useState<string>('');
   const [isResetLink, setResetLink] = useState<boolean>(false);
-  // const [isLoading, setLoading] = useState<boolean>(false);
-  const [hasErrors, setErrors] = useState<boolean>(true);
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { isLoading, isValid },
-  } = useForm<ForgotFormData>({ mode: 'onBlur', defaultValues: { email: '' } });
-  const onSubmit = (data: ForgotFormData) => {
+  } = useForm<ForgotFormType>({ mode: 'onBlur', defaultValues: { email: '' } });
+  const onSubmit = (data: ForgotFormType) => {
     reset();
-    console.log(data);
-    console.log('isValid', isValid);
-    if (isValid) {
-      handleResetPassword(data);
-    }
+    handleResetPassword(data);
   };
 
-  const handleResetPassword = async (data: ForgotFormData) => {
-    // setLoading(true);
-    setErrors(false);
+  const handleResetPassword = async (data: ForgotFormType) => {
+    setFbLoading(true);
+    setFbErrors('');
 
     const { email } = data;
     await sendPasswordResetEmail(firebaseAuth, email)
       .then(() => {
-        // setLoading(false);
         setResetLink(true);
       })
       .catch((error) => {
-        alert(error.message);
-        setErrors(true);
-        setResetLink(false);
+        setFbErrors(error.message);
+      })
+      .finally(() => {
+        setFbLoading(false);
       });
   };
 
   return (
     <Wrapper>
+      {hasFbErrors && <InfoBar text={hasFbErrors}/>}
       <Title>Reset</Title>
 
       {isResetLink ? (
@@ -72,7 +70,7 @@ export default function Forgot() {
           <Controller
             control={control}
             name="email"
-            rules={emailRules<ForgotFormData>()}
+            rules={emailRules<ForgotFormType>()}
             render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
               <>
                 <Label>Email</Label>
@@ -87,7 +85,7 @@ export default function Forgot() {
             )}
           />
           <Button onPress={handleSubmit(onSubmit)} disabled={!isValid} mt="$8">
-            {`Reset${hasErrors || !isLoading ? '' : 'ing'} password`}
+            {`Reset${!isFbLoading ? '' : 'ing'} password`}
           </Button>
           <LinkComposite activeText="Back to login" pathname={EPathRouteScreen.LOGIN} />
         </BlockInput>

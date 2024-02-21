@@ -2,7 +2,6 @@ import { signInWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
-import { useAppDispatch } from '~/app/hooks';
 import {
   Label,
   Input,
@@ -12,49 +11,40 @@ import {
   InputSecure,
   Button,
 } from '~/app/screens/(auth)/components';
-import { setErrorText, userLogin } from '~/app/store/reducer/user/user-slice';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules, passwordRules } from "~/app/utils/patterns";
-import { LoginFormData } from "~/app/types/auth-form-data";
+import { LoginFormType } from "~/app/types/auth-form.type";
+import InfoBar from "~/app/components/info-bar/info-bar";
 
 export default function Login() {
-  const dispatch = useAppDispatch();
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
-  const [hasFbErrors, setFbErrors] = useState<boolean>(false);
+  const [hasFbErrors, setFbErrors] = useState<string>('');
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { isLoading, isValid },
-  } = useForm<LoginFormData>({ mode: 'onBlur', defaultValues: { email: '', password: '' } });
-  const onSubmit = (data: LoginFormData) => {
+    formState: { isValid },
+  } = useForm<LoginFormType>({ mode: 'onBlur', defaultValues: { email: '', password: '' } });
+  const onSubmit = (data: LoginFormType) => {
     reset();
-    console.log(data);
-    console.log('isValid', isValid);
-    if (isValid) {
-      firebaseSignIn(data);
-    }
+    firebaseSignIn(data);
   };
 
-  const firebaseSignIn = async (data: LoginFormData) => {
-    console.log('firebaseSignIn');
+  const firebaseSignIn = async (data: LoginFormType) => {
     setFbLoading(true);
-    setFbErrors(false);
-
+    setFbErrors('');
     const { email, password } = data;
 
     await signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then(() => {
-        dispatch(userLogin({ email }));
+      .then((res) => {
+        console.log('res', res);
         console.log('success', firebaseAuth.currentUser?.email);
       })
       .catch((error) => {
-        alert(error.message);
-        dispatch(setErrorText(error.message));
-        setFbErrors(true);
-      }) //lifedok@gmail.com
+        setFbErrors(error.message);
+      })
       .finally(() => {
         setFbLoading(false);
       });
@@ -62,13 +52,13 @@ export default function Login() {
 
   return (
     <Wrapper>
+      {hasFbErrors && <InfoBar text={hasFbErrors}/>}
       <Title>Login</Title>
-      {hasFbErrors && <Title>{hasFbErrors}</Title>}
 
       <Controller
         control={control}
         name="email"
-        rules={emailRules<LoginFormData>()}
+        rules={emailRules<LoginFormType>()}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <Label>Email</Label>
@@ -86,7 +76,7 @@ export default function Login() {
       <Controller
         control={control}
         name="password"
-        rules={passwordRules<LoginFormData>()}
+        rules={passwordRules<LoginFormType>()}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <Label>Password</Label>

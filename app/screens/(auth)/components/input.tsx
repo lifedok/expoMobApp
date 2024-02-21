@@ -9,7 +9,7 @@ export default function Input(props: IInput): ReactElement {
   const { errorText, ...restProps } = props;
   return (
     <Wrapper>
-      <InputStyles {...restProps} mb="$0" autoCapitalize="none" />
+      <InputStyles mb="$0" autoCapitalize="none" {...restProps} />
       {errorText ? <TextContainer>{errorText}</TextContainer> : null}
     </Wrapper>
   );
