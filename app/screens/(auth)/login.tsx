@@ -1,64 +1,49 @@
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 
 import { useAppDispatch } from '~/app/hooks';
 import {
   Label,
   Input,
   Title,
-  Button,
   LinkComposite,
   Wrapper,
   InputSecure,
+  Button,
 } from '~/app/screens/(auth)/components';
 import { setErrorText, userLogin } from '~/app/store/reducer/user/user-slice';
-import { useGetUserSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
+import { emailRules, passwordRules } from "~/app/utils/patterns";
+import { LoginFormData } from "~/app/types/auth-form-data";
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [hasErrors, setErrors] = useState<boolean>(true);
-  // const [errorText, setErrorText] = useState<string>('');
   const dispatch = useAppDispatch();
-  const { errorText } = useGetUserSelector();
+  const [isFbLoading, setFbLoading] = useState<boolean>(false);
+  const [hasFbErrors, setFbErrors] = useState<boolean>(false);
 
-  const isFormError = (): boolean => {
-    let isError: boolean = false;
-    if (email?.length) {
-      if (!email.includes('@')) {
-        dispatch(setErrorText('Invalid email'));
-        isError = true;
-      } else if (email.indexOf(' ') != -1) {
-        dispatch(setErrorText('Email can not contain spaces'));
-        isError = true;
-      }
-    }
-    if (password?.length) {
-      if (password.length < 6) {
-        dispatch(setErrorText('Password should be more then 6 charters'));
-        isError = true;
-      } else if (password.indexOf(' ') != -1) {
-        dispatch(setErrorText('Password can not contain spaces'));
-        isError = true;
-      }
-    }
-    return isError;
-  };
-
-  const onSubmit = () => {
-    console.log('onSubmit');
-    const formIsValid = isFormError();
-    if (!formIsValid) {
-      firebaseSignIn();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isLoading, isValid },
+  } = useForm<LoginFormData>({ mode: 'onBlur', defaultValues: { email: '', password: '' } });
+  const onSubmit = (data: LoginFormData) => {
+    reset();
+    console.log(data);
+    console.log('isValid', isValid);
+    if (isValid) {
+      firebaseSignIn(data);
     }
   };
 
-  const firebaseSignIn = async () => {
-    setLoading(true);
-    setErrors(false);
+  const firebaseSignIn = async (data: LoginFormData) => {
+    console.log('firebaseSignIn');
+    setFbLoading(true);
+    setFbErrors(false);
+
+    const { email, password } = data;
 
     await signInWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
@@ -68,35 +53,58 @@ export default function Login() {
       .catch((error) => {
         alert(error.message);
         dispatch(setErrorText(error.message));
-        setErrors(true);
+        setFbErrors(true);
       }) //lifedok@gmail.com
       .finally(() => {
-        setLoading(false);
+        setFbLoading(false);
       });
   };
-
-  console.log('email', email);
-  console.log('password', password);
 
   return (
     <Wrapper>
       <Title>Login</Title>
-      {errorText && <Title>{errorText}</Title>}
+      {hasFbErrors && <Title>{hasFbErrors}</Title>}
 
-      <Label>Email</Label>
-      <Input placeholder="Enter your email" value={email} onChangeText={(v) => setEmail(v)} />
+      <Controller
+        control={control}
+        name="email"
+        rules={emailRules<LoginFormData>()}
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+          <>
+            <Label>Email</Label>
+            <Input
+              placeholder="Enter your email"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              {...(error?.message && { errorText: error.message })}
+            />
+          </>
+        )}
+      />
 
-      <Label>Password</Label>
-      <InputSecure
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={(v) => setPassword(v)}
+      <Controller
+        control={control}
+        name="password"
+        rules={passwordRules<LoginFormData>()}
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+          <>
+            <Label>Password</Label>
+            <InputSecure
+              placeholder="Enter your password"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              {...(error?.message && { errorText: error.message })}
+            />
+          </>
+        )}
       />
 
       <LinkComposite isFlexEnd activeText="Forgot password" pathname={EPathRouteScreen.FORGOT} />
 
-      <Button mt="$8" onPress={onSubmit} disabled={!email || !password}>
-        {hasErrors || !isLoading ? 'Login' : 'Logging'}
+      <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={!isValid}>
+        {!isFbLoading ? 'Login' : 'Logging'}
       </Button>
 
       <LinkComposite
