@@ -1,9 +1,11 @@
 import { ReactElement, ReactNode } from 'react';
 import { ScrollView as TScrollView, YStack as TYStack, styled } from 'tamagui';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Wrapper({ children }: { children: ReactNode }): ReactElement {
+  const { top } = useSafeAreaInsets();
   return (
-    <YStack>
+    <YStack paddingTop={top}>
       <ScrollView>{children}</ScrollView>
     </YStack>
   );
@@ -14,6 +16,7 @@ const YStack = styled(TYStack, {
   justifyContent: 'center',
   alignItems: 'center',
   bg: '$orange3',
+  position: 'relative'
 });
 
 const ScrollView = styled(TScrollView, {

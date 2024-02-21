@@ -34,7 +34,7 @@ const InitialLayout = () => {
     // router.replace(EPathRouteScreen.START as any); // TODO
     // setTimeout(() => {
     router.replace(
-      EPathRouteScreen.HOME as never
+      EPathRouteScreen.LOGIN as never
       // firebaseUser ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never)
     );
     // }, 3000);

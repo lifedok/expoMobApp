@@ -2,7 +2,6 @@ import React from 'react';
 import { YStack, H2, Separator } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
-import { userLogout } from '~/app/store/reducer/user/user-slice';
 import { Button } from "~/app/screens/(auth)/components";
 
 export default function StartPage(): React.ReactNode {

@@ -7,8 +7,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, ListItem, styled, YStack, Text, Paragraph } from 'tamagui';
 
 import { firebaseAuth } from '~/app/utils/firebase';
+import { useGetUserSelector } from "~/app/store/selectors";
 
 export default function CustomDrawer(props: DrawerContentComponentProps): React.ReactNode {
+  const { userAuth } = useGetUserSelector();
   const { bottom } = useSafeAreaInsets();
   const paddingTop: number = 6;
 
@@ -21,8 +23,10 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
       .catch((error) => alert(error.message));
   };
 
-  const email = firebaseAuth.currentUser?.email;
+  const email = userAuth?.email ? userAuth.email : firebaseAuth.currentUser?.email;
+  const username = userAuth?.username ? userAuth.username : null;
 
+  console.log('userAuth', userAuth)
   return (
     <YStack f={1}>
       <DrawerContentScrollView
@@ -30,7 +34,7 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
         scrollEnabled={false}
         contentContainerStyle={{ backgroundColor: colorTokens.light.green.green2, flex: 1 }}>
         <ListItem
-          title={<UserName>{email ? email.split('@')[0] : 'Unidentified userName'} </UserName>}
+          {...!!username && {title: <UserName>{username}</UserName>}}
           subTitle={<Paragraph>{email ? email : 'Unidentified cat'}</Paragraph>}
           borderRadius={6}
           paddingHorizontal={12}

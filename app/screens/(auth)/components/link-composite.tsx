@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { ReactElement } from 'react';
 import { SizableText, YStack, styled } from 'tamagui';
 
-import { Button } from './button';
+import { PressLink } from './press-link';
 
 interface ILink {
   activeText: string;
@@ -18,7 +18,7 @@ export default function LinkComposite(props: ILink): ReactElement {
       <SizableText fontSize="$3">{text}</SizableText>
       {/*TODO*/}
       <Link href={{ pathname } as never} asChild>
-        <Button type="link">{activeText}</Button>
+        <PressLink>{activeText}</PressLink>
       </Link>
     </Wrapper>
   );
