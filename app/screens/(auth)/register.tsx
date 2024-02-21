@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { useState } from 'react';
+import { useState } from "react";
 import { useForm, Controller } from 'react-hook-form';
 
 import { useAppDispatch } from '~/app/hooks';
@@ -12,51 +12,48 @@ import {
   Title,
   Wrapper,
 } from '~/app/screens/(auth)/components';
-import { SignInFormData } from '~/app/types/auth-form-data';
+import { SignInFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
-import { emailRules, passwordRules, usernameRules } from '~/app/utils/patterns';
+import { emailRules, passwordRules, usernameRules } from "~/app/utils/patterns";
+import InfoBar from "~/app/components/info-bar/info-bar";
+import { userLogin } from "~/app/store/reducer/user/user-slice";
+import { AuthDataType } from "~/app/store/reducer/user/user-slice.type";
 
 export default function Register() {
   const dispatch = useAppDispatch();
-  const [hasErrors, setErrors] = useState<boolean>(true);
+  const [hasFbErrors, setFbErrors] = useState<string>('');
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { isLoading, isValid },
-  } = useForm<SignInFormData>({
+    watch,
+    formState: { isValid },
+  } = useForm<SignInFormType>({
     mode: 'onBlur',
     defaultValues: { username: '', email: '', password: '', confirmPassword: '' },
   });
 
-  const onSubmit = (data: SignInFormData) => {
-    reset();
-    console.log(data);
-    console.log('isValid', isValid);
-    if (isValid) {
-      createAccount(data);
-    }
+  const onSubmit = (data: SignInFormType) => {
+    reset({password: "", confirmPassword: ""});
+    createAccount(data);
   };
 
-  const createAccount = async (data: SignInFormData) => {
+  const createAccount = async (data: SignInFormType) => {
     setFbLoading(true);
-    // setFbErrors(false);
+    setFbErrors('');
 
-    const { email, password } = data;
+    const { username, email, password } = data;
 
-    // console.log('handleCreateAccount', email);
     await createUserWithEmailAndPassword(firebaseAuth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log('user', user);
-        // setLoading(false);
+      .then(() => {
+        const userAuth: AuthDataType = { email: email, username: username };
+        dispatch(userLogin(userAuth));
       })
       .catch((error) => {
-        alert(error.message);
-        setErrors(true);
+        setFbErrors(error.message);
       })
       .finally(() => {
         setFbLoading(false);
@@ -65,17 +62,19 @@ export default function Register() {
 
   return (
     <Wrapper>
+      {hasFbErrors && <InfoBar text={hasFbErrors}/>}
       <Title>Register</Title>
 
       <Controller
         control={control}
         name="username"
-        rules={usernameRules<SignInFormData>()}
+        rules={usernameRules<SignInFormType>()}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <Label>Username</Label>
             <Input
               placeholder="Enter your username"
+              autoCapitalize='words'
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -88,7 +87,7 @@ export default function Register() {
       <Controller
         control={control}
         name="email"
-        rules={emailRules<SignInFormData>()}
+        rules={emailRules<SignInFormType>()}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <Label>Email</Label>
@@ -106,7 +105,7 @@ export default function Register() {
       <Controller
         control={control}
         name="password"
-        rules={passwordRules<SignInFormData>()}
+        rules={passwordRules<SignInFormType>()}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <Label>Password</Label>
@@ -123,8 +122,15 @@ export default function Register() {
 
       <Controller
         control={control}
-        name="password"
-        rules={passwordRules<SignInFormData>()}
+        name="confirmPassword"
+        rules={{
+          ...passwordRules<SignInFormType>(),
+          validate: (val: string) => {
+            if (watch('password') != val) {
+              return "Your passwords do no match";
+            }
+          }
+        }}
         render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <Label>Confirm password</Label>
