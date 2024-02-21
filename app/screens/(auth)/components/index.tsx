@@ -1,5 +1,6 @@
-export { Button } from './button';
-export { Input } from './input';
+export { PressLink } from './press-link';
+export { default as Button } from './button';
+export { default as Input } from './input';
 export { Label } from './label';
 export { Title } from './title';
 export { default as Wrapper } from './wrapper';
