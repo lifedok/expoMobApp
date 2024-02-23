@@ -1,11 +1,12 @@
 import { onAuthStateChanged, User } from '@firebase/auth';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
-import { Slot, useRouter, SplashScreen } from 'expo-router';
+import { Slot, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { TamaguiProvider, Theme } from 'tamagui';
+import * as SplashScreen from 'expo-splash-screen';
 
 import config from '../tamagui.config';
 
@@ -14,8 +15,6 @@ import { useGetUiSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { queryClient } from '~/queryClient';
-
-SplashScreen.preventAutoHideAsync();
 
 const InitialLayout = () => {
   const router = useRouter();
@@ -47,6 +46,10 @@ const InitialLayout = () => {
   );
 };
 
+SplashScreen.preventAutoHideAsync()
+  .then((result) => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
+  .catch(console.warn); // it's good to explicitly catch and inspect any error
+
 export default function RootLayout() {
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
@@ -55,7 +58,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      setTimeout(async () => {
+        await SplashScreen.hideAsync();
+      }, 2000);
     }
   }, [loaded]);
 

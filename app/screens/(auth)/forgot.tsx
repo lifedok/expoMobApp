@@ -84,7 +84,7 @@ export default function Forgot() {
               </>
             )}
           />
-          <Button onPress={handleSubmit(onSubmit)} disabled={!isValid} mt="$8">
+          <Button onPress={handleSubmit(onSubmit)} mt="$8">
             {`Reset${!isFbLoading ? '' : 'ing'} password`}
           </Button>
           <LinkComposite activeText="Back to login" pathname={EPathRouteScreen.LOGIN} />
