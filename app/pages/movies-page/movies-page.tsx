@@ -45,6 +45,10 @@ export default function MoviesPage(): React.JSX.Element {
     }
   };
 
+  const _renderSpinner = () => {
+    return <Spinner py={14} width="100%" />
+  }
+
   const _renderItem = (item: ResultItem) => {
     const width = window.width / 2 - (gap + paddingHorizontal / 2);
     return (
@@ -63,7 +67,7 @@ export default function MoviesPage(): React.JSX.Element {
   const _renderLoader = () => {
     return (
       <LoaderWrapper>
-        {isLoadingTrendingMovies ? <Spinner /> : null}
+        {isLoadingTrendingMovies ? _renderSpinner() : null}
         {searchValue.length > 0 && !searchQuery?.data?.results.length && <H4>No results</H4>}
       </LoaderWrapper>
     );
@@ -82,7 +86,7 @@ export default function MoviesPage(): React.JSX.Element {
         />
       </InputContainer>
 
-      {searchQuery.isLoading && <Spinner />}
+      {searchQuery.isLoading && _renderSpinner()}
 
       <FlatList
         data={searchQuery.data?.results ? searchQuery.data.results : movieList}

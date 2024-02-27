@@ -2,12 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { DrawerContentComponentProps } from '@react-navigation/drawer/src/types';
 import { colorTokens } from '@tamagui/themes';
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, ListItem, styled, YStack, Text, Paragraph } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
-import { getAllKeys, getStorageItem, removeStorageItem } from "~/app/services/login-user-name";
+import { getStorageItem } from '~/app/services/login-user-name';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
@@ -35,9 +35,8 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
   };
 
   if (email) {
-    getStorageItem({ key: email }).then((res) => {
-      console.log('const username = ', res);
-      if (res) setUsername(res);
+    getStorageItem({ key: email }).then((value) => {
+      if (value) setUsername(value);
     });
   }
 

@@ -1,9 +1,10 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Keyboard } from 'react-native';
 
 import { useAppDispatch } from '~/app/hooks';
+import { Spinner } from '~/app/pages/movies-page/spinner';
 import {
   Button,
   Input,
@@ -143,7 +144,8 @@ export default function Register() {
         )}
       />
 
-      <Button mt="$8" onPress={handleSubmit(onSubmit)}>
+      <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={isFbLoading}>
+        {isFbLoading && <Spinner size="small" />}
         {`Creat${!isFbLoading ? 'e' : 'ing'} account`}
       </Button>
 

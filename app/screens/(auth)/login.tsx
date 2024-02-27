@@ -1,8 +1,9 @@
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 import { useAppDispatch } from '~/app/hooks';
+import { Spinner } from '~/app/pages/movies-page/spinner';
 import {
   Label,
   Input,
@@ -41,7 +42,7 @@ export default function Login() {
 
     await signInWithEmailAndPassword(firebaseAuth, email, password)
       .then((res) => {
-        console.log('res', res);
+        console.log('emailAndPassword', res);
       })
       .catch((error) => {
         dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
@@ -93,7 +94,8 @@ export default function Login() {
 
       <LinkComposite isFlexEnd activeText="Forgot password" pathname={EPathRouteScreen.FORGOT} />
 
-      <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={!isValid}>
+      <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={!isValid || isFbLoading}>
+        {isFbLoading && <Spinner size="small" />}
         {!isFbLoading ? 'Login' : 'Logging'}
       </Button>
 
