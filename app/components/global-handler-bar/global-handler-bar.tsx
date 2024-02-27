@@ -23,7 +23,7 @@ export default function GlobalHandlerBar(props: IGlobalHandlerBar): ReactElement
   const getBg = () => {
     switch (status) {
       case ETextStatus.ERROR:
-        return colorTokens.light.red.red8;
+        return colorTokens.light.red.red9;
       case ETextStatus.WARNING:
         return colorTokens.light.yellow.yellow8;
       case ETextStatus.SUCCESS:

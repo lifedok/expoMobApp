@@ -2,37 +2,45 @@ import { Ionicons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { DrawerContentComponentProps } from '@react-navigation/drawer/src/types';
 import { colorTokens } from '@tamagui/themes';
-import React from 'react';
+import React, { useState } from "react";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, ListItem, styled, YStack, Text, Paragraph } from 'tamagui';
 
+import { useAppDispatch } from '~/app/hooks';
+import { getAllKeys, getStorageItem, removeStorageItem } from "~/app/services/login-user-name";
+import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
+import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
-import { useGetUserSelector } from "~/app/store/selectors";
-import { useAppDispatch } from "~/app/hooks";
-import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
-import { ETextStatus } from "~/app/types/interfaces/global-text-info";
 
 export default function CustomDrawer(props: DrawerContentComponentProps): React.ReactNode {
   const dispatch = useAppDispatch();
-  const { userAuth } = useGetUserSelector();
+  const [username, setUsername] = useState<string>('');
+
   const { bottom } = useSafeAreaInsets();
   const paddingTop: number = 6;
+
+  const email = firebaseAuth.currentUser?.email;
 
   const handleSignOut = () => {
     firebaseAuth
       .signOut()
       .then(() => {
-        dispatch(addStatusInfo({text: 'You have successfully logged out!', status: ETextStatus.SUCCESS}))
+        dispatch(
+          addStatusInfo({ text: 'You have successfully logged out!', status: ETextStatus.SUCCESS })
+        );
       })
       .catch((error) => {
-        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
+        dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
       });
   };
 
-  const email = userAuth?.email ? userAuth.email : firebaseAuth.currentUser?.email;
-  const username = userAuth?.username ? userAuth.username : null;
+  if (email) {
+    getStorageItem({ key: email }).then((res) => {
+      console.log('const username = ', res);
+      if (res) setUsername(res);
+    });
+  }
 
-  console.log('userAuth', userAuth)
   return (
     <YStack f={1}>
       <DrawerContentScrollView
@@ -40,7 +48,7 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
         scrollEnabled={false}
         contentContainerStyle={{ backgroundColor: colorTokens.light.green.green2, flex: 1 }}>
         <ListItem
-          {...!!username && {title: <UserName>{username}</UserName>}}
+          {...(!!username && { title: <UserName>{username}</UserName> })}
           subTitle={<Paragraph>{email ? email : 'Unidentified cat'}</Paragraph>}
           borderRadius={6}
           paddingHorizontal={12}

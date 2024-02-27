@@ -10,3 +10,7 @@ export type LoginFormType = Required<Pick<SignInFormType, 'email' | 'password'>>
 
 export type ForgotFormType = Required<Pick<LoginFormType, 'email'>>;
 
+export type AuthUserType = {
+  email: string;
+  username: string;
+};

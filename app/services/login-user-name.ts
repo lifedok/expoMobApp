@@ -1,31 +1,65 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LOGIN_USER_NAME_KEY = 'login-user-name';
+interface IStorageItem {
+  key: string;
+  value: string;
+}
 
-export type LoginUserName = string;
-
-export const saveLoginUserName = async (token: LoginUserName): Promise<void> => {
+export const setStorageItem = async ({ key, value }: IStorageItem): Promise<void> => {
   try {
-    await AsyncStorage.setItem(LOGIN_USER_NAME_KEY, token);
+    console.log('setStorageItem ==> key, value', key, value);
+    await AsyncStorage.setItem(key, value);
   } catch (e) {
-    console.log('saveLoginUserName => error', e);
+    console.log('setStorageItem => error', e);
   }
 };
 
-export const getLoginUserName = async (): Promise<LoginUserName | undefined> => {
+export const getStorageItem = async ({
+  key,
+}: Pick<IStorageItem, 'key'>): Promise<string | undefined> => {
   try {
-    const token = await AsyncStorage.getItem(LOGIN_USER_NAME_KEY);
-    return token ?? '';
+    const userName = await AsyncStorage.getItem(key);
+    if (userName !== null) return userName;
   } catch (e) {
-    console.log('getLoginUserName => error', e);
+    console.log('getStorageItem => error', e);
   }
 };
 
-export const removeLoginUserName = async (): Promise<void> => {
+export const removeStorageItem = async ({ key }: Pick<IStorageItem, 'key'>): Promise<void> => {
   try {
-    await AsyncStorage.removeItem(LOGIN_USER_NAME_KEY);
+    await AsyncStorage.removeItem(key);
   } catch (e) {
-    console.log('removeToken => error', e);
+    console.log('removeUserName => error', e);
   }
   console.log('Done.');
+};
+
+export const setStorageData = async (key: string, value: object) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(key, jsonValue);
+  } catch (e) {
+    console.log('setStorageData => error', e);
+  }
+};
+
+export const getStorageData = async (key: string) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    console.log('getStorageData => error', e);
+  }
+};
+
+export const getAllKeys = async (): Promise<void> => {
+  let keys: any;
+  try {
+    keys = await AsyncStorage.getAllKeys();
+    console.log('keys', keys);
+    return keys;
+  } catch (e) {
+    // read key error
+  }
+  console.log(keys);
 };
