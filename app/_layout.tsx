@@ -1,24 +1,25 @@
 import { onAuthStateChanged, User } from '@firebase/auth';
+import NetInfo, { NetInfoState, NetInfoStateType } from '@react-native-community/netinfo';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Slot, useRouter } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
-import { TamaguiProvider, Theme, YStack, Text } from 'tamagui';
-import * as SplashScreen from 'expo-splash-screen';
+import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
 import config from '../tamagui.config';
 
+import GlobalHandlerBar from '~/app/components/global-handler-bar/global-handler-bar';
+import { useAppDispatch } from '~/app/hooks';
 import { store } from '~/app/store';
-import { useGetUserSelector } from "~/app/store/selectors";
+import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
+import { useGetUserSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { queryClient } from '~/queryClient';
-import InfoBar from "~/app/components/info-bar/info-bar";
-import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
-import { ETextStatus } from "~/app/types/interfaces/global-text-info";
-import { useAppDispatch } from "~/app/hooks";
 
 const InitialLayout = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +27,24 @@ const InitialLayout = () => {
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
   const { statusInfo } = useGetUserSelector();
 
+  const handleNetworkChange = (state: NetInfoState) => {
+    if (!state.isConnected) {
+      dispatch(addStatusInfo({ text: 'Check your connection', status: ETextStatus.WARNING }));
+    } else if (state.type === NetInfoStateType.unknown) {
+      dispatch(
+        addStatusInfo({ text: 'Your connection is not stable', status: ETextStatus.WARNING })
+      );
+    }
+  };
+
   useEffect(() => {
-    dispatch(addStatusInfo({text: '', status: ETextStatus.SUCCESS}))
+    const netInfoSubscription = NetInfo.addEventListener((state) => handleNetworkChange(state));
+    return () => {
+      netInfoSubscription && netInfoSubscription();
+    };
+  }, []);
+
+  useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
       setFirebaseUser(user);
     });
@@ -40,29 +57,34 @@ const InitialLayout = () => {
   }, [firebaseUser]);
 
   return (
-    <Theme name={'light'}>
-      <YStack flex={1} position={'relative'}>
-        {!!statusInfo.text && <InfoBar {...statusInfo}/>}
+    <Theme name="light">
+      <YStack flex={1} position="relative">
+        {!!statusInfo.text && <GlobalHandlerBar {...statusInfo} />}
         <Slot />
       </YStack>
     </Theme>
   );
 };
 
+SplashScreen.preventAutoHideAsync()
+  .then((result) => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
+  .catch(console.warn); // it's good to explicitly catch and inspect any error
 
 export default function RootLayout() {
-  SplashScreen.preventAutoHideAsync();
-  setTimeout(SplashScreen.hideAsync, 2000);
-
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
   });
 
-  if (!loaded) {
-    return null;
-  }
+  useEffect(() => {
+    if (loaded) {
+      setTimeout(async () => {
+        await SplashScreen.hideAsync();
+      }, 2000);
+    }
+  }, [loaded]);
 
+  if (!loaded) return null;
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>

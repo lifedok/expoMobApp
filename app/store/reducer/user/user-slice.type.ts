@@ -1,8 +1,8 @@
-import { IGlobalTextInfo } from "~/app/types/interfaces/global-text-info";
+import { IGlobalHandler } from '~/app/types/interfaces/global-text-info';
 
 export type UserSliceType = {
   userAuth: AuthDataType | null;
-  statusInfo: IGlobalTextInfo
+  statusInfo: IGlobalHandler;
 };
 
 export type AuthDataType = {
