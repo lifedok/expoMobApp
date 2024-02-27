@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { useState } from "react";
 import { useForm, Controller } from 'react-hook-form';
-
+import { Keyboard } from 'react-native'
 import { useAppDispatch } from '~/app/hooks';
 import {
   Button,
@@ -16,13 +16,12 @@ import { SignInFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules, passwordRules, usernameRules } from "~/app/utils/patterns";
-import InfoBar from "~/app/components/info-bar/info-bar";
-import { userLogin } from "~/app/store/reducer/user/user-slice";
+import { addStatusInfo, setUserLogin } from "~/app/store/reducer/user/user-slice";
 import { AuthDataType } from "~/app/store/reducer/user/user-slice.type";
+import { ETextStatus } from "~/app/types/interfaces/global-text-info";
 
 export default function Register() {
   const dispatch = useAppDispatch();
-  const [hasFbErrors, setFbErrors] = useState<string>('');
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
 
   const {
@@ -43,17 +42,17 @@ export default function Register() {
 
   const createAccount = async (data: SignInFormType) => {
     setFbLoading(true);
-    setFbErrors('');
+    dispatch(addStatusInfo({text: ''}))
 
     const { username, email, password } = data;
 
     await createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
         const userAuth: AuthDataType = { email: email, username: username };
-        dispatch(userLogin(userAuth));
+        dispatch(setUserLogin(userAuth));
       })
       .catch((error) => {
-        setFbErrors(error.message);
+        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
       })
       .finally(() => {
         setFbLoading(false);
@@ -62,7 +61,6 @@ export default function Register() {
 
   return (
     <Wrapper>
-      {hasFbErrors && <InfoBar text={hasFbErrors}/>}
       <Title>Register</Title>
 
       <Controller
@@ -73,6 +71,7 @@ export default function Register() {
           <>
             <Label>Username</Label>
             <Input
+              textContentType={'username'}
               placeholder="Enter your username"
               autoCapitalize='words'
               onBlur={onBlur}
@@ -92,6 +91,7 @@ export default function Register() {
           <>
             <Label>Email</Label>
             <Input
+              textContentType={'emailAddress'}
               placeholder="Enter your Email"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -110,6 +110,7 @@ export default function Register() {
           <>
             <Label>Password</Label>
             <InputSecure
+              textContentType={'password'}
               placeholder="Enter your password"
               onBlur={onBlur}
               onChangeText={onChange}

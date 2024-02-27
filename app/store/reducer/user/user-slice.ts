@@ -5,17 +5,23 @@ import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
 
 const initialState: UserSliceType = {
   userAuth: null,
+  statusInfo: {
+    text: '',
+  }
 };
 
 export const userSlice = createSlice({
   name: ReducerNameEnum.USER,
   initialState,
   reducers: {
-    userLogin: (state, action) => {
-      console.log('action.payload', action.payload)
+    setUserLogin: (state, action) => {
       state.userAuth = action.payload;
+    },
+    addStatusInfo: (state, {payload}) => {
+      const { text, status } = payload
+      state.statusInfo = { text: text, status: status };
     },
   },
 });
 
-export const { userLogin } = userSlice.actions;
+export const { setUserLogin, addStatusInfo } = userSlice.actions;

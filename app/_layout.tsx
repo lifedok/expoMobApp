@@ -5,43 +5,46 @@ import { Slot, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
-import { TamaguiProvider, Theme } from 'tamagui';
+import { TamaguiProvider, Theme, YStack, Text } from 'tamagui';
 import * as SplashScreen from 'expo-splash-screen';
 
 import config from '../tamagui.config';
 
 import { store } from '~/app/store';
-import { useGetUiSelector } from '~/app/store/selectors';
+import { useGetUserSelector } from "~/app/store/selectors";
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { queryClient } from '~/queryClient';
+import InfoBar from "~/app/components/info-bar/info-bar";
+import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
+import { ETextStatus } from "~/app/types/interfaces/global-text-info";
+import { useAppDispatch } from "~/app/hooks";
 
 const InitialLayout = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const { statusInfo } = useGetUserSelector();
 
-  const { theme } = useGetUiSelector();
-
-  // TODO: user - firstly, get user token and after then redirect to firebaseAuth or to home screen (if token is success)
   useEffect(() => {
+    dispatch(addStatusInfo({text: '', status: ETextStatus.SUCCESS}))
     onAuthStateChanged(firebaseAuth, (user) => {
       setFirebaseUser(user);
     });
   }, []);
 
   useEffect(() => {
-    // router.replace(EPathRouteScreen.START as any); // TODO
-    // setTimeout(() => {
     router.replace(
-      EPathRouteScreen.LOGIN as never
-      // firebaseUser ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never)
+      firebaseUser ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never)
     );
-    // }, 3000);
   }, [firebaseUser]);
 
   return (
-    <Theme name={theme}>
-      <Slot />
+    <Theme name={'light'}>
+      <YStack flex={1} position={'relative'}>
+        {!!statusInfo.text && <InfoBar {...statusInfo}/>}
+        <Slot />
+      </YStack>
     </Theme>
   );
 };
@@ -49,7 +52,7 @@ const InitialLayout = () => {
 
 export default function RootLayout() {
   SplashScreen.preventAutoHideAsync();
-  setTimeout(SplashScreen.hideAsync, 3000);
+  setTimeout(SplashScreen.hideAsync, 2000);
 
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),

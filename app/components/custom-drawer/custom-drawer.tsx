@@ -8,8 +8,12 @@ import { Avatar, ListItem, styled, YStack, Text, Paragraph } from 'tamagui';
 
 import { firebaseAuth } from '~/app/utils/firebase';
 import { useGetUserSelector } from "~/app/store/selectors";
+import { useAppDispatch } from "~/app/hooks";
+import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
+import { ETextStatus } from "~/app/types/interfaces/global-text-info";
 
 export default function CustomDrawer(props: DrawerContentComponentProps): React.ReactNode {
+  const dispatch = useAppDispatch();
   const { userAuth } = useGetUserSelector();
   const { bottom } = useSafeAreaInsets();
   const paddingTop: number = 6;
@@ -18,9 +22,11 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
     firebaseAuth
       .signOut()
       .then(() => {
-        alert(`You have successfully logged out!`);
+        dispatch(addStatusInfo({text: 'You have successfully logged out!', status: ETextStatus.SUCCESS}))
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
+      });
   };
 
   const email = userAuth?.email ? userAuth.email : firebaseAuth.currentUser?.email;

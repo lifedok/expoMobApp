@@ -15,11 +15,13 @@ import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules, passwordRules } from "~/app/utils/patterns";
 import { LoginFormType } from "~/app/types/auth-form.type";
-import InfoBar from "~/app/components/info-bar/info-bar";
+import { useAppDispatch } from "~/app/hooks";
+import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
+import { ETextStatus } from "~/app/types/interfaces/global-text-info";
 
 export default function Login() {
+  const dispatch = useAppDispatch();
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
-  const [hasFbErrors, setFbErrors] = useState<string>('');
 
   const {
     control,
@@ -34,7 +36,7 @@ export default function Login() {
 
   const firebaseSignIn = async (data: LoginFormType) => {
     setFbLoading(true);
-    setFbErrors('');
+    dispatch(addStatusInfo({text: ''}))
     const { email, password } = data;
 
     await signInWithEmailAndPassword(firebaseAuth, email, password)
@@ -43,7 +45,7 @@ export default function Login() {
         console.log('success', firebaseAuth.currentUser?.email);
       })
       .catch((error) => {
-        setFbErrors(error.message);
+        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
       })
       .finally(() => {
         setFbLoading(false);
@@ -52,7 +54,6 @@ export default function Login() {
 
   return (
     <Wrapper>
-      {hasFbErrors && <InfoBar text={hasFbErrors}/>}
       <Title>Login</Title>
 
       <Controller

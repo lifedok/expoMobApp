@@ -16,11 +16,13 @@ import { ForgotFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules } from '~/app/utils/patterns';
-import InfoBar from "~/app/components/info-bar/info-bar";
+import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
+import { ETextStatus } from "~/app/types/interfaces/global-text-info";
+import { useAppDispatch } from "~/app/hooks";
 
 export default function Forgot() {
+  const dispatch = useAppDispatch();
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
-  const [hasFbErrors, setFbErrors] = useState<string>('');
   const [isResetLink, setResetLink] = useState<boolean>(false);
 
   const {
@@ -36,7 +38,7 @@ export default function Forgot() {
 
   const handleResetPassword = async (data: ForgotFormType) => {
     setFbLoading(true);
-    setFbErrors('');
+    dispatch(addStatusInfo({text: ''}))
 
     const { email } = data;
     await sendPasswordResetEmail(firebaseAuth, email)
@@ -44,7 +46,7 @@ export default function Forgot() {
         setResetLink(true);
       })
       .catch((error) => {
-        setFbErrors(error.message);
+        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
       })
       .finally(() => {
         setFbLoading(false);
@@ -53,7 +55,6 @@ export default function Forgot() {
 
   return (
     <Wrapper>
-      {hasFbErrors && <InfoBar text={hasFbErrors}/>}
       <Title>Reset</Title>
 
       {isResetLink ? (

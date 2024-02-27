@@ -5,7 +5,6 @@ const EPathRoute = {
 };
 
 export const EPathRouteScreen = {
-  START: '/screens/start',
   LOGIN: `${EPathRoute.AUTH}/login`,
   REGISTER: `${EPathRoute.AUTH}/register`,
   FORGOT: `${EPathRoute.AUTH}/forgot`,
