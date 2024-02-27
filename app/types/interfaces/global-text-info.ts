@@ -1,9 +1,10 @@
-export interface IGlobalTextInfo {
-  text: string
-  status?: ETextStatus,
+export interface IGlobalHandler {
+  text: string;
+  status?: ETextStatus;
 }
 
 export enum ETextStatus {
   SUCCESS = 'success',
-  ERROR = 'error'
+  WARNING = 'warning',
+  ERROR = 'error',
 }

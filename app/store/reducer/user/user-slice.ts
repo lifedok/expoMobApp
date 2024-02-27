@@ -7,7 +7,7 @@ const initialState: UserSliceType = {
   userAuth: null,
   statusInfo: {
     text: '',
-  }
+  },
 };
 
 export const userSlice = createSlice({
@@ -17,9 +17,8 @@ export const userSlice = createSlice({
     setUserLogin: (state, action) => {
       state.userAuth = action.payload;
     },
-    addStatusInfo: (state, {payload}) => {
-      const { text, status } = payload
-      state.statusInfo = { text: text, status: status };
+    addStatusInfo: (state, { payload }) => {
+      state.statusInfo = { ...payload };
     },
   },
 });

@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from '@firebase/auth';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
+import { useAppDispatch } from '~/app/hooks';
 import {
   Label,
   Input,
@@ -11,13 +12,12 @@ import {
   InputSecure,
   Button,
 } from '~/app/screens/(auth)/components';
+import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
+import { LoginFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
-import { emailRules, passwordRules } from "~/app/utils/patterns";
-import { LoginFormType } from "~/app/types/auth-form.type";
-import { useAppDispatch } from "~/app/hooks";
-import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
-import { ETextStatus } from "~/app/types/interfaces/global-text-info";
+import { emailRules, passwordRules } from '~/app/utils/patterns';
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export default function Login() {
 
   const firebaseSignIn = async (data: LoginFormType) => {
     setFbLoading(true);
-    dispatch(addStatusInfo({text: ''}))
+    dispatch(addStatusInfo({ text: '' }));
     const { email, password } = data;
 
     await signInWithEmailAndPassword(firebaseAuth, email, password)
@@ -45,7 +45,7 @@ export default function Login() {
         console.log('success', firebaseAuth.currentUser?.email);
       })
       .catch((error) => {
-        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
+        dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
       })
       .finally(() => {
         setFbLoading(false);
