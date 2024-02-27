@@ -15,7 +15,7 @@ const YStack = styled(TYStack, {
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-  bg: '$orange3',
+  bg: 'rgba(0,255,255,0.02)',
   position: 'relative'
 });
 

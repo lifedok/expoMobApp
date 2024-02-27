@@ -46,25 +46,20 @@ const InitialLayout = () => {
   );
 };
 
-SplashScreen.preventAutoHideAsync()
-  .then((result) => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
-  .catch(console.warn); // it's good to explicitly catch and inspect any error
 
 export default function RootLayout() {
+  SplashScreen.preventAutoHideAsync();
+  setTimeout(SplashScreen.hideAsync, 3000);
+
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
   });
 
-  useEffect(() => {
-    if (loaded) {
-      setTimeout(async () => {
-        await SplashScreen.hideAsync();
-      }, 2000);
-    }
-  }, [loaded]);
+  if (!loaded) {
+    return null;
+  }
 
-  if (!loaded) return null;
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>
