@@ -136,6 +136,9 @@ export default function Register() {
           <>
             <Label>Confirm password</Label>
             <InputSecure
+              textContentType={'oneTimeCode'}
+              blurOnSubmit={false}
+              onSubmitEditing={()=> Keyboard.dismiss()}
               placeholder="Confirm password"
               onBlur={onBlur}
               onChangeText={onChange}
