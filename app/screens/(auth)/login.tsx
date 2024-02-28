@@ -41,9 +41,7 @@ export default function Login() {
     const { email, password } = data;
 
     await signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then((res) => {
-        console.log('emailAndPassword', res);
-      })
+      .then(() => {})
       .catch((error) => {
         dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
       })

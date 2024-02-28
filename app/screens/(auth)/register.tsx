@@ -14,7 +14,7 @@ import {
   Title,
   Wrapper,
 } from '~/app/screens/(auth)/components';
-import { setStorageItem } from '~/app/services/login-user-name';
+import { setStorageItem } from '~/app/services/storage';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { SignInFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
@@ -43,8 +43,8 @@ export default function Register() {
     const { username, email, password } = data;
 
     await createUserWithEmailAndPassword(firebaseAuth, email, password)
-      .then(async () => {
-        await setStorageItem({ key: email, value: username });
+      .then(() => {
+        setStorageItem({ key: email, value: username });
       })
       .catch((error) => {
         dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
