@@ -45,7 +45,7 @@ const MovieItem = (props: IMovieItem) => {
         </Card.Header>
         <Card.Footer p={8} backgroundColor="darkblue">
           <YStack>
-            <Text fontSize={20} color="lightblue">
+            <Text fontSize={20} color="lightblue" numberOfLines={1}>
               {getMovieName(item)}
             </Text>
             <Paragraph theme="alt2">
