@@ -1,6 +1,7 @@
 import React from 'react';
-import { Spinner as UiSpinner } from 'tamagui';
+import { Spinner as UiSpinner, SpinnerProps } from 'tamagui';
 
-export const Spinner = () => {
-  return <UiSpinner py={14} size="large" color="$blue10" width="100%" />;
+interface ISpinner extends SpinnerProps {}
+export const Spinner = (props: ISpinner): React.ReactNode => {
+  return <UiSpinner py={14} size="large" color="$blue11" {...props} />;
 };

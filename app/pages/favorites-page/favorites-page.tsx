@@ -75,10 +75,9 @@ export default function FavoritesPage(): React.JSX.Element {
             );
           })
         ) : (
-          <YStack>
-            <Text>
-              It's still empty here. Add the movie to your favorites so that it appears here.
-            </Text>
+          <YStack width="100%" ai="center" gap="12px">
+            <EmptyText>It's still empty here.</EmptyText>
+            <EmptyText>Add the movie to your favorites so that it appears here.</EmptyText>
           </YStack>
         )}
       </FavoritesStyles>
@@ -87,8 +86,17 @@ export default function FavoritesPage(): React.JSX.Element {
 }
 
 const FavoritesStyles = styled(YStack, {
+  flex: 1,
   flexWrap: 'wrap',
   gap: '8px',
   alignItems: 'center',
   justifyContent: 'center',
+});
+
+const EmptyText = styled(Text, {
+  fontSize: 18,
+  fontWeight: '400',
+  maxWidth: '80%',
+  minHeight: 20,
+  textAlign: 'center',
 });
