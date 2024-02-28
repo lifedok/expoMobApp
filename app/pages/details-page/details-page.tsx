@@ -8,11 +8,11 @@ import Animated from 'react-native-reanimated';
 import { Button, H4, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
-import { getImagePath, getMovieName } from '~/app/pages/shared/helpers';
 import { getMovieDetails } from '~/app/services/api';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
 import { MediaType, ResultItem } from '~/app/types/interfaces/apiresults.interface';
+import { getImagePath, getImageTransitionTag, getMovieName } from '~/app/utils/helpers';
 import { Main } from '~/tamagui.config';
 
 export interface IDetailsPage {
@@ -84,6 +84,7 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
             borderRadius={6}
             source={getImagePath({ path: item?.poster_path, image: 'poster' })}
             style={{ width: 200, height: 300, margin: 10 }}
+            sharedTransitionTag={getImageTransitionTag({ media_type: type, id: +id })}
           />
         </ImageBackground>
 

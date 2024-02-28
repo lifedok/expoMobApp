@@ -6,6 +6,7 @@ import { Slot, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { Provider } from 'react-redux';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
@@ -96,11 +97,13 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <InitialLayout />
-          </Provider>
-        </QueryClientProvider>
+        <Animated.View style={{ flex: 1 }} entering={FadeIn}>
+          <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+              <InitialLayout />
+            </Provider>
+          </QueryClientProvider>
+        </Animated.View>
       </GestureHandlerRootView>
     </TamaguiProvider>
   );

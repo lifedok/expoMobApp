@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, YStack } from 'tamagui';
 
-import { getMovieName } from '~/app/pages/shared/helpers';
+import { getMovieName } from '~/app/utils/helpers';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 
 interface IFavoriteItemInfo {

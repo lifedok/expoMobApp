@@ -1,16 +1,20 @@
 import LottieView from 'lottie-react-native';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Animated, { ZoomOut } from 'react-native-reanimated';
 
 interface ISplashAnimation {
   onAnimationFinish?: (value: boolean) => void;
 }
+
+const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 export default function SplashAnimation({ onAnimationFinish }: ISplashAnimation) {
   return (
     <View style={SplashAnimationStyles.wrapper}>
       <Text style={SplashAnimationStyles.header}>Welcome to</Text>
       <Text style={SplashAnimationStyles.text}>The Movie DB</Text>
-      <LottieView
+      <AnimatedLottieView
+        exiting={ZoomOut}
         autoPlay
         loop={false}
         style={{

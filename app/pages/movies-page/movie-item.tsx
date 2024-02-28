@@ -3,9 +3,9 @@ import { memo } from 'react';
 import Animated from 'react-native-reanimated';
 import { Text, Card, CardProps, Paragraph, YStack, styled } from 'tamagui';
 
-import { getImagePath, getMovieName } from '~/app/pages/shared/helpers';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
+import { getImagePath, getImageTransitionTag, getMovieName } from '~/app/utils/helpers';
 
 interface IMovieItem extends CardProps {
   item: ResultItem;
@@ -37,6 +37,10 @@ const MovieItem = (props: IMovieItem) => {
             source={getImagePath({ path: item.poster_path, width: 200, image: 'poster' })}
             alt={item.title}
             style={{ width: cardProp.width as number, height: 200 }}
+            sharedTransitionTag={getImageTransitionTag({
+              media_type: item.media_type,
+              id: item.id,
+            })}
           />
         </Card.Header>
         <Card.Footer p={8} backgroundColor="darkblue">

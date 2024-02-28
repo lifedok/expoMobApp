@@ -7,11 +7,11 @@ import { YStack, Text, styled, ScrollView, ListItem, Button } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import { FavoriteItemInfo } from '~/app/pages/favorites-page/favorite-item-info';
-import { getImagePath } from '~/app/pages/shared/helpers';
 import { removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
+import { getImagePath, getImageTransitionTag } from '~/app/utils/helpers';
 
 export default function FavoritesPage(): React.JSX.Element {
   const { favorites } = useGetDataSelector();
@@ -56,6 +56,10 @@ export default function FavoritesPage(): React.JSX.Element {
                           path: item.poster_path,
                           image: 'poster',
                           width: 500,
+                        })}
+                        sharedTransitionTag={getImageTransitionTag({
+                          media_type: item.media_type,
+                          id: item.id,
                         })}
                       />
                     );
