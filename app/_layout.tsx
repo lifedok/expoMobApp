@@ -12,6 +12,7 @@ import { TamaguiProvider, Theme, YStack } from 'tamagui';
 import config from '../tamagui.config';
 
 import GlobalHandlerBar from '~/app/components/global-handler-bar/global-handler-bar';
+import SplashAnimation from '~/app/components/splash-animation/splash-animation';
 import { useAppDispatch } from '~/app/hooks';
 import { store } from '~/app/store';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
@@ -66,11 +67,12 @@ const InitialLayout = () => {
   );
 };
 
-SplashScreen.preventAutoHideAsync()
-  .then((result) => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
-  .catch(console.warn); // it's good to explicitly catch and inspect any error
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [appReady, setAppReady] = useState<boolean>(false);
+  const [splashAnimation, setSplashAnimation] = useState<boolean>(false);
+
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
@@ -78,13 +80,19 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      setTimeout(async () => {
-        await SplashScreen.hideAsync();
-      }, 2000);
+      setAppReady(true);
     }
   }, [loaded]);
 
-  if (!loaded) return null;
+  if (!appReady || !splashAnimation) {
+    return (
+      <SplashAnimation
+        onAnimationFinish={(isCancelLed) => {
+          if (!isCancelLed) setSplashAnimation(true);
+        }}
+      />
+    );
+  }
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>

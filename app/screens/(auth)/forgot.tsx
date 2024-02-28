@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { YStack, H4, styled } from 'tamagui';
 
+import { useAppDispatch } from '~/app/hooks';
 import {
   Label,
   Input,
@@ -12,13 +13,12 @@ import {
   LinkComposite,
   Wrapper,
 } from '~/app/screens/(auth)/components';
+import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { ForgotFormType } from '~/app/types/auth-form.type';
 import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules } from '~/app/utils/patterns';
-import { addStatusInfo } from "~/app/store/reducer/user/user-slice";
-import { ETextStatus } from "~/app/types/interfaces/global-text-info";
-import { useAppDispatch } from "~/app/hooks";
 
 export default function Forgot() {
   const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ export default function Forgot() {
 
   const handleResetPassword = async (data: ForgotFormType) => {
     setFbLoading(true);
-    dispatch(addStatusInfo({text: ''}))
+    dispatch(addStatusInfo({ text: '' }));
 
     const { email } = data;
     await sendPasswordResetEmail(firebaseAuth, email)
@@ -46,7 +46,7 @@ export default function Forgot() {
         setResetLink(true);
       })
       .catch((error) => {
-        dispatch(addStatusInfo({text: error.message, status: ETextStatus.ERROR}))
+        dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
       })
       .finally(() => {
         setFbLoading(false);

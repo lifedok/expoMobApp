@@ -1,4 +1,4 @@
-import { FieldPath, FieldValues } from "react-hook-form/dist/types";
+import { FieldPath, FieldValues } from 'react-hook-form/dist/types';
 import { RegisterOptions } from 'react-hook-form/dist/types/validator';
 
 type RulesType<T extends FieldValues> = Omit<
