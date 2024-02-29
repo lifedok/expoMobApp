@@ -1,11 +1,10 @@
 import { Link } from 'expo-router';
 import { memo } from 'react';
-import Animated from 'react-native-reanimated';
-import { Text, Card, CardProps, Paragraph, YStack, styled } from 'tamagui';
+import { Text, Card, CardProps, Paragraph, YStack, styled, Image } from 'tamagui';
 
 import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
-import { getImagePath, getImageTransitionTag, getMovieName } from '~/app/utils/helpers';
+import { getImagePath, getMovieName } from '~/app/utils/helpers';
 
 interface IMovieItem extends CardProps {
   item: ResultItem;
@@ -31,14 +30,10 @@ const MovieItem = (props: IMovieItem) => {
         animation="bouncy"
         {...cardProp}>
         <Card.Header p={0}>
-          <Animated.Image
+          <Image
             source={getImagePath({ path: item.poster_path, width: 200, image: 'poster' })}
             alt={item.title}
             style={{ width: cardProp.width as number, height: 200 }}
-            sharedTransitionTag={getImageTransitionTag({
-              media_type: item.media_type,
-              id: item.id,
-            })}
           />
         </Card.Header>
         <Card.Footer p={8} backgroundColor="darkblue">

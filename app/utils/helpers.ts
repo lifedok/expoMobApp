@@ -1,7 +1,7 @@
 import { ImageSourcePropType } from 'react-native';
 
 import { IMAGES } from '~/app/contsts/images';
-import { MediaType, ResultItem } from '~/app/types/interfaces/apiresults.interface';
+import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 
 export const getMovieName = (item?: ResultItem): string | undefined => {
   return item?.original_name || item?.title || item?.name;
@@ -27,10 +27,17 @@ export const getImagePath = ({
   return path ? { uri: getPath(path, width ?? 400) } : img;
 };
 
-type ImageTransitionTagType = {
-  media_type: MediaType;
-  id: number;
+type MovieReleaseDateType = {
+  releaseDate?: string;
+  firstAirDate?: string;
 };
-export const getImageTransitionTag = ({ media_type, id }: ImageTransitionTagType): string => {
-  return `${media_type === 'movie' ? 'movie' : 'tv'}-${id}`;
+export const getMovieReleaseDate = ({
+  releaseDate,
+  firstAirDate,
+}: MovieReleaseDateType): string => {
+  return releaseDate
+    ? `Release date: ${releaseDate}`
+    : firstAirDate
+      ? `The first broadcast: ${firstAirDate}`
+      : 'The information was not provided';
 };

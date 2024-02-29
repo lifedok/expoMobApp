@@ -2,8 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Link } from 'expo-router';
 import React from 'react';
-import Animated from 'react-native-reanimated';
-import { YStack, Text, styled, ScrollView, ListItem, Button } from 'tamagui';
+import { YStack, Text, styled, ScrollView, ListItem, Button, Image } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import { FavoriteItemInfo } from '~/app/pages/favorites-page/favorite-item-info';
@@ -11,7 +10,7 @@ import { removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
 import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
-import { getImagePath, getImageTransitionTag } from '~/app/utils/helpers';
+import { getImagePath } from '~/app/utils/helpers';
 
 export default function FavoritesPage(): React.JSX.Element {
   const { favorites } = useGetDataSelector();
@@ -46,17 +45,13 @@ export default function FavoritesPage(): React.JSX.Element {
                   paddingRight={12}
                   icon={() => {
                     return (
-                      <Animated.Image
+                      <Image
                         alt={item.title || item.name}
                         style={{ width: 60, height: 60 }}
                         source={getImagePath({
                           path: item.poster_path,
                           image: 'poster',
                           width: 500,
-                        })}
-                        sharedTransitionTag={getImageTransitionTag({
-                          media_type: item.media_type,
-                          id: item.id,
                         })}
                       />
                     );

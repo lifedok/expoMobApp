@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { Provider } from 'react-redux';
-import { TamaguiProvider, Theme, YStack } from 'tamagui';
+import { TamaguiProvider } from 'tamagui';
 
 import config from '../tamagui.config';
 
@@ -57,12 +57,10 @@ const InitialLayout = () => {
   }, [firebaseUser]);
 
   return (
-    <Theme name="light">
-      <YStack flex={1} position="relative">
-        {!!statusInfo.text && <GlobalHandlerBar {...statusInfo} />}
-        <Slot />
-      </YStack>
-    </Theme>
+    <Animated.View style={{ flex: 1, position: 'relative' }} entering={FadeIn}>
+      {!!statusInfo.text && <GlobalHandlerBar {...statusInfo} />}
+      <Slot />
+    </Animated.View>
   );
 };
 
@@ -95,13 +93,11 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Animated.View style={{ flex: 1 }} entering={FadeIn}>
-          <QueryClientProvider client={queryClient}>
-            <Provider store={store}>
-              <InitialLayout />
-            </Provider>
-          </QueryClientProvider>
-        </Animated.View>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <InitialLayout />
+          </Provider>
+        </QueryClientProvider>
       </GestureHandlerRootView>
     </TamaguiProvider>
   );

@@ -2,9 +2,9 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useQuery } from '@tanstack/react-query';
 import { Stack, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { Button, H4, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
@@ -12,7 +12,7 @@ import { getMovieDetails } from '~/app/services/api';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
 import { MediaType, ResultItem } from '~/app/types/interfaces/apiresults.interface';
-import { getImagePath, getImageTransitionTag, getMovieName } from '~/app/utils/helpers';
+import { getImagePath, getMovieName, getMovieReleaseDate } from '~/app/utils/helpers';
 import { Main } from '~/tamagui.config';
 
 export interface IDetailsPage {
@@ -69,6 +69,17 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
 
   const bottomTabBarHeight: number = useBottomTabBarHeight();
 
+  const shift: number = 7;
+  const translateX = useSharedValue(shift);
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateX: withSpring(translateX.value * 2) }],
+  }));
+
+  useEffect(() => {
+    translateX.value -= shift;
+  }, []);
+
   return (
     <Main>
       <Stack.Screen
@@ -83,17 +94,17 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
           <Animated.Image
             borderRadius={6}
             source={getImagePath({ path: item?.poster_path, image: 'poster' })}
-            style={{ width: 200, height: 300, margin: 10 }}
-            sharedTransitionTag={getImageTransitionTag({ media_type: type, id: +id })}
+            style={[{ width: 200, height: 300, margin: 10 }, animatedStyles]}
           />
         </ImageBackground>
 
-        <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: 10 }}>
-          {item?.release_date ? (
-            <Text fontSize={16}>Release date: {item?.release_date}</Text>
-          ) : (
-            <Text fontSize={16}>The date of the first broadcast: {item?.first_air_date}</Text>
-          )}
+        <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: shift*2 }}>
+          <Text fontSize={16}>
+            {getMovieReleaseDate({
+              releaseDate: item?.release_date,
+              firstAirDate: item?.first_air_date,
+            })}
+          </Text>
 
           <H4 color="$blue9" mt="$2">
             {getMovieName(item)}
