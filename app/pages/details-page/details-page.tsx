@@ -5,7 +5,7 @@ import { Stack, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { Button, H4, Paragraph, ScrollView, Text, useTheme, YStack } from 'tamagui';
+import { Button, H4, Paragraph, ScrollView, styled, Text, useTheme, YStack } from 'tamagui';
 
 import { useAppDispatch } from '~/app/hooks';
 import { getMovieDetails } from '~/app/services/api';
@@ -13,7 +13,6 @@ import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data
 import { useGetDataSelector } from '~/app/store/selectors';
 import { MediaType, ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { getImagePath, getMovieName, getMovieReleaseDate } from '~/app/utils/helpers';
-import { Main } from '~/tamagui.config';
 
 export interface IDetailsPage {
   id: string;
@@ -81,7 +80,7 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
   }, []);
 
   return (
-    <Main>
+    <DetailsPageStyles>
       <Stack.Screen
         options={{
           title: 'Details',
@@ -98,7 +97,7 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
           />
         </ImageBackground>
 
-        <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: shift*2 }}>
+        <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: shift * 2 }}>
           <Text fontSize={16}>
             {getMovieReleaseDate({
               releaseDate: item?.release_date,
@@ -106,7 +105,7 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
             })}
           </Text>
 
-          <H4 color="$blue9" mt="$2">
+          <H4 color="$blue11" mt="$2">
             {getMovieName(item)}
           </H4>
           {item?.vote_average ? (
@@ -122,6 +121,13 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
           </Text>
         </YStack>
       </ScrollView>
-    </Main>
+    </DetailsPageStyles>
   );
 }
+
+const DetailsPageStyles = styled(YStack, {
+  flex: 1,
+  justifyContent: 'space-between',
+  maxWidth: 960,
+  bg: 'rgba(0,255,255,0.02)',
+});

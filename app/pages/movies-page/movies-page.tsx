@@ -118,7 +118,7 @@ const Main = styled(YStack, {
   name: 'Main',
   tag: 'main',
   flexDirection: 'column',
-  backgroundColor: '$blue0',
+  backgroundColor: 'rgba(0,255,255,0.02)',
 });
 
 export const InputContainer = styled(YStack, {

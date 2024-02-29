@@ -11,8 +11,8 @@ const DrawerLayout = () => {
       drawerContent={CustomDrawer}
       screenOptions={{
         drawerHideStatusBarOnOpen: true,
-        drawerActiveBackgroundColor: colorTokens.dark.blue.blue7,
-        drawerActiveTintColor: '#fff',
+        drawerActiveBackgroundColor: colorTokens.light.blue.blue11,
+        drawerActiveTintColor: colorTokens.light.blue.blue1,
         drawerLabelStyle: { marginLeft: -20 },
       }}>
       <Drawer.Screen

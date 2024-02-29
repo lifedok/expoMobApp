@@ -87,6 +87,7 @@ const FavoritesStyles = styled(YStack, {
   gap: '8px',
   alignItems: 'center',
   justifyContent: 'center',
+  bg: 'rgba(0,255,255,0.02)',
 });
 
 const EmptyText = styled(Text, {

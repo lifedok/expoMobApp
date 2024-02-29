@@ -36,15 +36,15 @@ const MovieItem = (props: IMovieItem) => {
             style={{ width: cardProp.width as number, height: 200 }}
           />
         </Card.Header>
-        <Card.Footer p={8} backgroundColor="darkblue">
+        <Card.Footer p={8} backgroundColor="$blue11">
           <YStack>
-            <Text fontSize={20} color="lightblue" numberOfLines={1}>
+            <Text fontSize={20} color="$blue6" numberOfLines={1}>
               {getMovieName(item)}
             </Text>
-            <Paragraph theme="alt2">
+            <Paragraph theme="alt2" color="#a9a9a9">
               {item.release_date || item.first_air_date
                 ? new Date(item.release_date! || item.first_air_date!).getFullYear()
-                : ''}
+                : 'No release date was provided'}
             </Paragraph>
           </YStack>
         </Card.Footer>

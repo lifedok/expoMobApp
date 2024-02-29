@@ -39,5 +39,5 @@ export const getMovieReleaseDate = ({
     ? `Release date: ${releaseDate}`
     : firstAirDate
       ? `The first broadcast: ${firstAirDate}`
-      : 'The information was not provided';
+      : 'No release date was provided';
 };

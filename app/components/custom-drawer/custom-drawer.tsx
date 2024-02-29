@@ -9,7 +9,6 @@ import { Avatar, ListItem, styled, YStack, Text, Paragraph } from 'tamagui';
 import { useAppDispatch } from '~/app/hooks';
 import { getStorageItem } from '~/app/services/storage';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
-import { useGetDataSelector } from '~/app/store/selectors';
 import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 
