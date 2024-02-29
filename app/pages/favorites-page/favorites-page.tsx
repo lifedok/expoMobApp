@@ -9,7 +9,7 @@ import { useAppDispatch } from '~/app/hooks';
 import { FavoriteItemInfo } from '~/app/pages/favorites-page/favorite-item-info';
 import { removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { getImagePath, getImageTransitionTag } from '~/app/utils/helpers';
 
@@ -38,10 +38,7 @@ export default function FavoritesPage(): React.JSX.Element {
         {favorites.length ? (
           favorites.map((item: ResultItem, index: number) => {
             return (
-              <Link
-                key={`favorite_item${index}`}
-                href={`${EPathRouteScreen.HOME}/${item.id}` as never}
-                asChild>
+              <Link key={`favorite_item${index}`} href={`${ERoutePaths.HOME}/${item.id}`} asChild>
                 <ListItem
                   title={<FavoriteItemInfo item={item} />}
                   borderRadius={6}

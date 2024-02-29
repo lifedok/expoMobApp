@@ -1,36 +1,13 @@
-const EPathRoute = {
-  AUTH: '/screens/(auth)',
-  DRAWER: '/screens/(drawer)',
-  TABS: '/screens/(drawer)/(tabs)',
-};
-
-export const EPathRouteScreen = {
-  LOGIN: `${EPathRoute.AUTH}/login`,
-  REGISTER: `${EPathRoute.AUTH}/register`,
-  FORGOT: `${EPathRoute.AUTH}/forgot`,
-
-  HOME: `${EPathRoute.TABS}/home`,
-  LIST: `${EPathRoute.TABS}/list`,
-  MOVIES: `${EPathRoute.TABS}/movies`,
-  DETAILS: `${EPathRoute.TABS}/home/details`,
-};
-
-export enum ApiRoute {
-  LOGIN = '/login',
-  LOGOUT = '/logout',
-  HOTELS = '/hotels',
-  FAVORITES = '/favorite',
-  COMMENTS = '/comments',
+enum ERouteUnit {
+  AUTH = '/screens/(auth)',
+  TABS = '/screens/(drawer)/(tabs)',
 }
 
-export enum AuthorizationStatus {
-  AUTH = 'AUTH',
-  NO_AUTH = 'NO_AUTH',
-  UNKNOWN = 'UNKNOWN',
-}
+export enum ERoutePaths {
+  LOGIN = `${ERouteUnit.AUTH}/login`,
+  REGISTER = `${ERouteUnit.AUTH}/register`,
+  FORGOT = `${ERouteUnit.AUTH}/forgot`,
 
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+  HOME = `${ERouteUnit.TABS}/home`,
+  MOVIES = `${ERouteUnit.TABS}/home/movies`,
 }

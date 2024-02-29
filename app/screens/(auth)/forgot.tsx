@@ -15,7 +15,7 @@ import {
 } from '~/app/screens/(auth)/components';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { ForgotFormType } from '~/app/types/auth-form.type';
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules } from '~/app/utils/patterns';
@@ -25,12 +25,10 @@ export default function Forgot() {
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
   const [isResetLink, setResetLink] = useState<boolean>(false);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { isLoading, isValid },
-  } = useForm<ForgotFormType>({ mode: 'onBlur', defaultValues: { email: '' } });
+  const { control, handleSubmit, reset } = useForm<ForgotFormType>({
+    mode: 'onBlur',
+    defaultValues: { email: '' },
+  });
   const onSubmit = (data: ForgotFormType) => {
     reset();
     handleResetPassword(data);
@@ -61,8 +59,7 @@ export default function Forgot() {
         <BlockResult>
           <Text>A password reset request has been sent.</Text>
           <Text>Check your email or spam folder to find password reset link</Text>
-          {/*TODO*/}
-          <Button onPress={() => router.replace(EPathRouteScreen.LOGIN as never)} mt="$10">
+          <Button onPress={() => router.replace(ERoutePaths.LOGIN)} mt="$10">
             Back to login
           </Button>
         </BlockResult>
@@ -88,7 +85,7 @@ export default function Forgot() {
           <Button onPress={handleSubmit(onSubmit)} mt="$8">
             {`Reset${!isFbLoading ? '' : 'ing'} password`}
           </Button>
-          <LinkComposite activeText="Back to login" pathname={EPathRouteScreen.LOGIN} />
+          <LinkComposite activeText="Back to login" pathname={ERoutePaths.LOGIN} />
         </BlockInput>
       )}
     </Wrapper>

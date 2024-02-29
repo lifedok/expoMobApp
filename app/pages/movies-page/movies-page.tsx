@@ -46,8 +46,8 @@ export default function MoviesPage(): React.JSX.Element {
   };
 
   const _renderSpinner = () => {
-    return <Spinner py={14} width="100%" />
-  }
+    return <Spinner py={14} width="100%" />;
+  };
 
   const _renderItem = (item: ResultItem) => {
     const width = window.width / 2 - (gap + paddingHorizontal / 2);

@@ -15,7 +15,7 @@ import {
 } from '~/app/screens/(auth)/components';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { LoginFormType } from '~/app/types/auth-form.type';
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules, passwordRules } from '~/app/utils/patterns';
@@ -90,7 +90,7 @@ export default function Login() {
         )}
       />
 
-      <LinkComposite isFlexEnd activeText="Forgot password" pathname={EPathRouteScreen.FORGOT} />
+      <LinkComposite isFlexEnd activeText="Forgot password" pathname={ERoutePaths.FORGOT} />
 
       <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={!isValid || isFbLoading}>
         {isFbLoading && <Spinner size="small" />}
@@ -100,7 +100,7 @@ export default function Login() {
       <LinkComposite
         text={"Don't have an Account?"}
         activeText="Sign up"
-        pathname={EPathRouteScreen.REGISTER}
+        pathname={ERoutePaths.REGISTER}
       />
     </Wrapper>
   );

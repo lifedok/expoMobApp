@@ -17,7 +17,7 @@ import {
 import { setStorageItem } from '~/app/services/storage';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { SignInFormType } from '~/app/types/auth-form.type';
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { emailRules, passwordRules, usernameRules } from '~/app/utils/patterns';
@@ -149,11 +149,7 @@ export default function Register() {
         {`Creat${!isFbLoading ? 'e' : 'ing'} account`}
       </Button>
 
-      <LinkComposite
-        text="Have an account?"
-        activeText="Sign in"
-        pathname={EPathRouteScreen.LOGIN}
-      />
+      <LinkComposite text="Have an account?" activeText="Sign in" pathname={ERoutePaths.LOGIN} />
     </Wrapper>
   );
 }

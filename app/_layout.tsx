@@ -18,7 +18,7 @@ import { useAppDispatch } from '~/app/hooks';
 import { store } from '~/app/store';
 import { addStatusInfo } from '~/app/store/reducer/user/user-slice';
 import { useGetUserSelector } from '~/app/store/selectors';
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ETextStatus } from '~/app/types/interfaces/global-text-info';
 import { firebaseAuth } from '~/app/utils/firebase';
 import { queryClient } from '~/queryClient';
@@ -53,9 +53,7 @@ const InitialLayout = () => {
   }, []);
 
   useEffect(() => {
-    router.replace(
-      firebaseUser ? (EPathRouteScreen.HOME as never) : (EPathRouteScreen.LOGIN as never)
-    );
+    router.replace(firebaseUser ? ERoutePaths.MOVIES : ERoutePaths.LOGIN);
   }, [firebaseUser]);
 
   return (

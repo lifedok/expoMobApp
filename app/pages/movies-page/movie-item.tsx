@@ -3,7 +3,7 @@ import { memo } from 'react';
 import Animated from 'react-native-reanimated';
 import { Text, Card, CardProps, Paragraph, YStack, styled } from 'tamagui';
 
-import { EPathRouteScreen } from '~/app/types/enums/route.enum';
+import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { getImagePath, getImageTransitionTag, getMovieName } from '~/app/utils/helpers';
 
@@ -16,12 +16,10 @@ const MovieItem = (props: IMovieItem) => {
   return (
     <Link
       asChild
-      href={
-        {
-          pathname: `${EPathRouteScreen.HOME}/${item.id}`,
-          params: { type: item?.media_type },
-        } as never
-      }>
+      href={{
+        pathname: `${ERoutePaths.HOME}/${item.id}`,
+        params: { type: item?.media_type },
+      }}>
       <CardItemStyles
         elevate
         width={200}
