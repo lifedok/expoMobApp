@@ -26,16 +26,6 @@ const DrawerLayout = () => {
           ),
         }}
       />
-      <Drawer.Screen
-        name="profile"
-        options={{
-          headerTitle: 'Profile',
-          drawerLabel: 'Profile',
-          drawerIcon: ({ size, color }) => (
-            <Ionicons name="newspaper-outline" size={size} color={color} />
-          ),
-        }}
-      />
     </Drawer>
   );
 };
