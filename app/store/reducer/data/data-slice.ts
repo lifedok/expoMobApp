@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 import { DataSliceType } from '~/app/store/reducer/data/data-slice.type';
 import { ReducerNameEnum } from '~/app/types/enums/reducer-name.enum';
@@ -24,7 +24,7 @@ export const dataSlice = createSlice({
       state.trendingMovies = action.payload;
     },
     loadMovieList: (state, action) => {
-      state.movieList = [...state.movieList, ...action.payload]
+      state.movieList = [...state.movieList, ...action.payload];
     },
     isLoadingTrendingMovies: (state, action) => {
       state.isLoadingTrendingMovies = action.payload;
@@ -46,4 +46,10 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { loadTrendingMovies, isLoadingTrendingMovies, addToFavorite, removeFromFavorite, loadMovieList } = dataSlice.actions;
+export const {
+  loadTrendingMovies,
+  isLoadingTrendingMovies,
+  addToFavorite,
+  removeFromFavorite,
+  loadMovieList,
+} = dataSlice.actions;
