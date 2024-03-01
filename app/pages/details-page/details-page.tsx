@@ -9,6 +9,7 @@ import { Button, H4, Paragraph, ScrollView, styled, Text, YStack } from 'tamagui
 
 import colors from '~/app/consts/colors';
 import { useAppDispatch } from '~/app/hooks';
+import { Spinner } from '~/app/pages/movies-page/spinner';
 import { getMovieDetails } from '~/app/services/api';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
 import { useGetDataSelector } from '~/app/store/selectors';
@@ -89,41 +90,47 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
         options={{
           title: 'Details',
           headerLeft: () => <BackButton />,
-          headerRight: () => <FavoriteButton />,
+          headerRight: () => (movieItemResult.isLoading ? null : <FavoriteButton />),
         }}
       />
       <ScrollView paddingBottom={bottomTabBarHeight}>
-        <ImageBackground source={getImagePath({ path: item?.backdrop_path, image: 'bg' })}>
-          <Animated.Image
-            borderRadius={6}
-            source={getImagePath({ path: item?.poster_path, image: 'poster' })}
-            style={[{ width: 200, height: 300, margin: 10 }, animatedStyles]}
-          />
-        </ImageBackground>
+        {movieItemResult.isLoading ? (
+          <Spinner py={14} width="100%" />
+        ) : (
+          <>
+            <ImageBackground source={getImagePath({ path: item?.backdrop_path, image: 'bg' })}>
+              <Animated.Image
+                borderRadius={6}
+                source={getImagePath({ path: item?.poster_path, image: 'poster' })}
+                style={[{ width: 200, height: 300, margin: 10 }, animatedStyles]}
+              />
+            </ImageBackground>
 
-        <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: shift * 2 }}>
-          <Text fontSize={16}>
-            {getMovieReleaseDate({
-              releaseDate: item?.release_date,
-              firstAirDate: item?.first_air_date,
-            })}
-          </Text>
+            <YStack p={10} animation="lazy" enterStyle={{ opacity: 0, y: shift * 2 }}>
+              <Text fontSize={16}>
+                {getMovieReleaseDate({
+                  releaseDate: item?.release_date,
+                  firstAirDate: item?.first_air_date,
+                })}
+              </Text>
 
-          <H4 color={colors.textColorPrimary} mt="$2">
-            {getMovieName(item)}
-          </H4>
-          {item?.vote_average ? (
-            <Paragraph fontSize={12} mb="$2">
-              Average number of votes: {item?.vote_average.toFixed(1)}
-            </Paragraph>
-          ) : (
-            <Text />
-          )}
+              <H4 color={colors.textColorPrimary} mt="$2">
+                {getMovieName(item)}
+              </H4>
+              {item?.vote_average ? (
+                <Paragraph fontSize={12} mb="$2">
+                  Average number of votes: {item?.vote_average.toFixed(1)}
+                </Paragraph>
+              ) : (
+                <Text />
+              )}
 
-          <Text fontSize={16} mt="$3" mb="$2" fontStyle="italic">
-            {item?.overview}
-          </Text>
-        </YStack>
+              <Text fontSize={16} mt="$3" mb="$2" fontStyle="italic">
+                {item?.overview}
+              </Text>
+            </YStack>
+          </>
+        )}
       </ScrollView>
     </DetailsPageStyles>
   );
