@@ -13,7 +13,6 @@ export const getSearchResults = async (query: string): Promise<TrendingResult> =
 };
 
 export const getMovieDetails = async (id: number, type: MediaType): Promise<any> => {
-
   const response = await fetch(
     `https://api.themoviedb.org/3/${type ?? MediaType.Movie}/${id}?api_key=${API_KEY}`
   );
