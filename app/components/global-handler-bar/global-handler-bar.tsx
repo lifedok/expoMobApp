@@ -51,6 +51,7 @@ const Wrapper = styled(YStack, {
   justifyContent: 'center',
   alignItems: 'center',
   overflow: 'hidden',
+  pointerEvents: 'none',
 });
 
 const Content = styled(YStack, {
@@ -59,6 +60,7 @@ const Content = styled(YStack, {
   borderRadius: 6,
   justifyContent: 'center',
   alignItems: 'center',
+  pointerEvents: 'none',
 });
 
 const TextStyle = styled(Text, {

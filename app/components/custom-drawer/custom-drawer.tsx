@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { DrawerContentComponentProps } from '@react-navigation/drawer/src/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, ListItem, styled, YStack, Text, Paragraph } from 'tamagui';
 
@@ -21,6 +22,19 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
 
   const email = firebaseAuth.currentUser?.email;
 
+  const readUsernameFromStorage = async () => {
+    const allKeys = await AsyncStorage.getAllKeys();
+    console.info('allKeys', allKeys);
+    if (email) {
+      const value = await getStorageItem({ key: email });
+      if (value) setUsername(value);
+    }
+  };
+
+  useEffect(() => {
+    readUsernameFromStorage();
+  }, []);
+
   const handleSignOut = () => {
     firebaseAuth
       .signOut()
@@ -33,12 +47,6 @@ export default function CustomDrawer(props: DrawerContentComponentProps): React.
         dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));
       });
   };
-
-  if (email) {
-    getStorageItem({ key: email }).then((value) => {
-      if (value) setUsername(value);
-    });
-  }
 
   return (
     <YStack f={1}>

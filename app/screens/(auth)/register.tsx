@@ -42,6 +42,10 @@ export default function Register() {
     createAccount(data);
   };
 
+  const writeUsernameToStorage = async (email: string, username: string): Promise<void> => {
+    await setStorageItem({ key: email, value: username });
+  };
+
   const createAccount = async (data: SignInFormType) => {
     setFbLoading(true);
     dispatch(addStatusInfo({ text: '' }));
@@ -50,7 +54,7 @@ export default function Register() {
 
     await createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
-        setStorageItem({ key: email, value: username });
+        writeUsernameToStorage(email, username);
         dispatch(
           addStatusInfo({ text: `Registration was successful!`, status: ETextStatus.SUCCESS })
         );
