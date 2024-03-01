@@ -48,7 +48,7 @@ export default function FavoritesPage(): React.JSX.Element {
                     return (
                       <Image
                         alt={item.title || item.name}
-                        style={{ width: 60, height: 60 }}
+                        style={{ width: 60, minHeight: 60, height: '100%' }}
                         source={getImagePath({
                           path: item.poster_path,
                           image: 'poster',

@@ -6,7 +6,7 @@ import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { firebaseAuth } from '~/app/utils/firebase';
 
 export default function NotFoundScreen(): React.JSX.Element {
-  const isCurrentUser = !!firebaseAuth.currentUser;
+  const isCurrentUser: boolean = !!firebaseAuth.currentUser;
 
   const handleReplace = () => {
     router.replace(isCurrentUser ? ERoutePaths.MOVIES : ERoutePaths.LOGIN);

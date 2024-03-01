@@ -24,7 +24,7 @@ export const dataSlice = createSlice({
       state.trendingMovies = action.payload;
     },
     loadMovieList: (state, action) => {
-      state.movieList = state.movieList.concat(action.payload);
+      state.movieList = [...state.movieList, ...action.payload]
     },
     isLoadingTrendingMovies: (state, action) => {
       state.isLoadingTrendingMovies = action.payload;

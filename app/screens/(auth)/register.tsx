@@ -45,6 +45,9 @@ export default function Register() {
     await createUserWithEmailAndPassword(firebaseAuth, email, password)
       .then(() => {
         setStorageItem({ key: email, value: username });
+        dispatch(
+          addStatusInfo({ text: `Registration was successful!`, status: ETextStatus.SUCCESS })
+        );
       })
       .catch((error) => {
         dispatch(addStatusInfo({ text: error.message, status: ETextStatus.ERROR }));

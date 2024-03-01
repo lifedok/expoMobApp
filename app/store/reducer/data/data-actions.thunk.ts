@@ -28,7 +28,7 @@ export const fetchTrendingMovies = createAsyncThunk<
 
     if (data && (await data).results) {
       dispatch(loadTrendingMovies(data));
-      const results = (await data).results;
+      const results: ResultItem[] = (await data).results;
       dispatch(loadMovieList(results));
     }
   } catch (error) {
@@ -58,7 +58,6 @@ export const fetchSearchResults = createAsyncThunk<
       );
 
       const data = await response.json();
-      console.log('fetchSearchResults data', data);
       return data;
     } catch (error) {
       console.log('error', error);
