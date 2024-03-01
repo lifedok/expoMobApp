@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { ZoomOut } from 'react-native-reanimated';
 
+import colors from '~/app/consts/colors';
+
 interface ISplashAnimation {
   onAnimationFinish?: (value: boolean) => void;
 }
@@ -33,7 +35,7 @@ const SplashAnimationStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,255,255,0.02)',
+    backgroundColor: colors.bgPrimary,
   },
   header: {
     fontSize: 28,
@@ -46,7 +48,7 @@ const SplashAnimationStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: '700',
-    color: 'rgb(48, 164, 108)',
+    color: colors.textColorPrimary,
     paddingBottom: 32,
     letterSpacing: 2,
   },

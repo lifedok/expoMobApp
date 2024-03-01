@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
-import { colorTokens } from '@tamagui/themes';
 import { Drawer } from 'expo-router/drawer';
 
 import CustomDrawer from '~/app/components/custom-drawer/custom-drawer';
+import colors from '~/app/consts/colors';
 
 const DrawerLayout = () => {
   return (
@@ -11,8 +11,8 @@ const DrawerLayout = () => {
       drawerContent={CustomDrawer}
       screenOptions={{
         drawerHideStatusBarOnOpen: true,
-        drawerActiveBackgroundColor: colorTokens.light.blue.blue11,
-        drawerActiveTintColor: colorTokens.light.blue.blue1,
+        drawerActiveBackgroundColor: colors.driverActiveBgColor,
+        drawerActiveTintColor: colors.driverActiveTextColor,
         drawerLabelStyle: { marginLeft: -20 },
       }}>
       <Drawer.Screen

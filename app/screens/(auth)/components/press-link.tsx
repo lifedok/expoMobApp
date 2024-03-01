@@ -1,5 +1,6 @@
-import { colorTokens } from '@tamagui/themes';
 import { styled, Text } from 'tamagui';
+
+import colors from '~/app/consts/colors';
 
 export const PressLink = styled(Text, {
   fontSize: '$3',
@@ -8,7 +9,7 @@ export const PressLink = styled(Text, {
   pl: '$1',
   pr: '$1',
   br: '$4',
-  color: colorTokens.light.blue.blue12,
+  color: colors.linkTextColor,
   pressStyle: {
     opacity: 0.7,
   },

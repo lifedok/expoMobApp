@@ -5,8 +5,9 @@ import { Stack, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { Button, H4, Paragraph, ScrollView, styled, Text, useTheme, YStack } from 'tamagui';
+import { Button, H4, Paragraph, ScrollView, styled, Text, YStack } from 'tamagui';
 
+import colors from '~/app/consts/colors';
 import { useAppDispatch } from '~/app/hooks';
 import { getMovieDetails } from '~/app/services/api';
 import { addToFavorite, removeFromFavorite } from '~/app/store/reducer/data/data-slice';
@@ -20,7 +21,6 @@ export interface IDetailsPage {
 }
 
 export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Element {
-  const theme = useTheme();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -62,7 +62,11 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
       hoverStyle={{ scale: 0.925 }}
       pressStyle={{ scale: 0.975 }}
       animation="bouncy">
-      <Ionicons name={isFavorite ? 'heart' : 'heart-outline'} size={26} color={theme.blue9.get()} />
+      <Ionicons
+        name={isFavorite ? 'heart' : 'heart-outline'}
+        size={26}
+        color={colors.textColorIcon}
+      />
     </Button>
   );
 
@@ -105,7 +109,7 @@ export default function DetailsPage({ id, type }: IDetailsPage): React.JSX.Eleme
             })}
           </Text>
 
-          <H4 color="$blue11" mt="$2">
+          <H4 color={colors.textColorPrimary} mt="$2">
             {getMovieName(item)}
           </H4>
           {item?.vote_average ? (
@@ -129,5 +133,5 @@ const DetailsPageStyles = styled(YStack, {
   flex: 1,
   justifyContent: 'space-between',
   maxWidth: 960,
-  bg: 'rgba(0,255,255,0.02)',
+  bg: colors.bgPrimary,
 });

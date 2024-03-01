@@ -1,8 +1,9 @@
-import { colorTokens } from '@tamagui/themes';
 import { StyleProp } from '@tamagui/web';
 import React, { CSSProperties, ReactElement } from 'react';
 import { ViewStyle } from 'react-native';
 import { Button as TButton, ButtonProps } from 'tamagui';
+
+import colors from '~/app/consts/colors';
 
 export default function Button(props: ButtonProps): ReactElement {
   return (
@@ -15,7 +16,7 @@ export default function Button(props: ButtonProps): ReactElement {
       fontSize="$5"
       style={props.disabled ? BgColorDisabled : BgColorDefault}
       pressStyle={{
-        bg: '$green7',
+        bg: colors.buttonBgColorOptional,
         o: 0.7,
       }}
       {...props}
@@ -24,8 +25,8 @@ export default function Button(props: ButtonProps): ReactElement {
 }
 
 const BgColorDefault: StyleProp<ViewStyle | CSSProperties | (CSSProperties & ViewStyle)> = {
-  backgroundColor: colorTokens.light.green.green5,
-  color: colorTokens.light.green.green12,
+  backgroundColor: colors.buttonBgColor,
+  color: colors.buttonTextColor,
 };
 
 const BgColorDisabled: StyleProp<ViewStyle | CSSProperties | (CSSProperties & ViewStyle)> = {

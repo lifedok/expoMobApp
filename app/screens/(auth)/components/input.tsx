@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { styled, Input as TInput, InputProps, Text, YStack } from 'tamagui';
 
+import colors from '~/app/consts/colors';
+
 export interface IInput extends InputProps {
   errorText?: string;
 }
@@ -23,11 +25,11 @@ export const InputStyles = styled(TInput, {
   w: '100%',
   h: '$4',
   m: '$0',
-  borderColor: '$green8',
-  color: '$green12',
+  borderColor: colors.inputBorderColor,
+  color: colors.inputTextColor,
 });
 
 const TextContainer = styled(Text, {
   fontSize: 12,
-  color: 'red',
+  color: colors.textColorError,
 });

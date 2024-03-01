@@ -4,6 +4,7 @@ import { Link } from 'expo-router';
 import React from 'react';
 import { YStack, Text, styled, ScrollView, ListItem, Button, Image } from 'tamagui';
 
+import colors from '~/app/consts/colors';
 import { useAppDispatch } from '~/app/hooks';
 import { FavoriteItemInfo } from '~/app/pages/favorites-page/favorite-item-info';
 import { removeFromFavorite } from '~/app/store/reducer/data/data-slice';
@@ -63,7 +64,7 @@ export default function FavoritesPage(): React.JSX.Element {
                       style={{ width: 42, height: 42 }}
                       padding={0}
                       scaleIcon={1.2}
-                      icon={() => <Ionicons name="trash" size={24} color="red" />}
+                      icon={() => <Ionicons name="trash" size={24} color={colors.textColorError} />}
                     />
                   )}
                 />
@@ -87,7 +88,7 @@ const FavoritesStyles = styled(YStack, {
   gap: '8px',
   alignItems: 'center',
   justifyContent: 'center',
-  bg: 'rgba(0,255,255,0.02)',
+  bg: colors.bgPrimary,
 });
 
 const EmptyText = styled(Text, {

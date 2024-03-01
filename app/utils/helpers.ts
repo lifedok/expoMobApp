@@ -1,6 +1,6 @@
 import { ImageSourcePropType } from 'react-native';
 
-import { IMAGES } from '~/app/contsts/images';
+import { IMAGES } from '~/app/consts/images';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 
 export const getMovieName = (item?: ResultItem): string | undefined => {

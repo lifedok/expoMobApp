@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Dimensions } from 'react-native';
 import { YStack, styled, Input, H4 } from 'tamagui';
 
+import colors from '~/app/consts/colors';
 import { useAppDispatch } from '~/app/hooks';
 import useDebounce from '~/app/hooks/useDebounce';
 import MovieItem from '~/app/pages/movies-page/movie-item';
@@ -118,7 +119,7 @@ const Main = styled(YStack, {
   name: 'Main',
   tag: 'main',
   flexDirection: 'column',
-  backgroundColor: 'rgba(0,255,255,0.02)',
+  backgroundColor: colors.bgPrimary,
 });
 
 export const InputContainer = styled(YStack, {

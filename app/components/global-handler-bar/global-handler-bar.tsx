@@ -1,8 +1,8 @@
-import { colorTokens } from '@tamagui/themes';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styled, Text, TextProps, YStack } from 'tamagui';
 
+import colors from '~/app/consts/colors';
 import { ETextStatus, IGlobalHandler } from '~/app/types/interfaces/global-text-info';
 
 interface IGlobalHandlerBar extends Omit<TextProps, 'children'>, IGlobalHandler {}
@@ -20,16 +20,16 @@ export default function GlobalHandlerBar(props: IGlobalHandlerBar): ReactElement
     return () => clearTimeout(timer);
   }, [text]);
 
-  const getBg = () => {
+  const getBg = (): string => {
     switch (status) {
       case ETextStatus.ERROR:
-        return colorTokens.light.red.red9;
+        return colors.textColorError;
       case ETextStatus.WARNING:
-        return colorTokens.light.yellow.yellow8;
+        return colors.textColorWarning;
       case ETextStatus.SUCCESS:
-        return colorTokens.light.green.green8;
+        return colors.textColorSuccess;
       default:
-        return colorTokens.light.green.green8;
+        return colors.textColorSuccess;
     }
   };
 

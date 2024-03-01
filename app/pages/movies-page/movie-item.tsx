@@ -1,7 +1,8 @@
 import { Link } from 'expo-router';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { Text, Card, CardProps, Paragraph, YStack, styled, Image } from 'tamagui';
 
+import colors from '~/app/consts/colors';
 import { ERoutePaths } from '~/app/types/enums/route.enum';
 import { ResultItem } from '~/app/types/interfaces/apiresults.interface';
 import { getImagePath, getMovieName } from '~/app/utils/helpers';
@@ -9,7 +10,7 @@ import { getImagePath, getMovieName } from '~/app/utils/helpers';
 interface IMovieItem extends CardProps {
   item: ResultItem;
 }
-const MovieItem = (props: IMovieItem) => {
+const MovieItem = (props: IMovieItem): React.JSX.Element => {
   const { item, ...cardProp } = props;
 
   return (
@@ -36,12 +37,12 @@ const MovieItem = (props: IMovieItem) => {
             style={{ width: cardProp.width as number, height: 200 }}
           />
         </Card.Header>
-        <Card.Footer p={8} backgroundColor="$blue11">
+        <Card.Footer p={8} backgroundColor={colors.bgSecondary}>
           <YStack>
-            <Text fontSize={20} color="$blue6" numberOfLines={1}>
+            <Text fontSize={20} color={colors.textColorSecondary} numberOfLines={1}>
               {getMovieName(item)}
             </Text>
-            <Paragraph theme="alt2" color="#a9a9a9">
+            <Paragraph theme="alt2" color={colors.textColorOptional}>
               {item.release_date || item.first_air_date
                 ? new Date(item.release_date! || item.first_air_date!).getFullYear()
                 : 'No release date was provided'}
@@ -56,7 +57,7 @@ const MovieItem = (props: IMovieItem) => {
 export default memo(MovieItem);
 
 const CardItemStyles = styled(Card, {
-  shadowColor: '#000',
+  shadowColor: colors.shadowColor,
   shadowOffset: {
     width: 0,
     height: 2,
