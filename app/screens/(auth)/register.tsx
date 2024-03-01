@@ -26,7 +26,13 @@ export default function Register() {
   const dispatch = useAppDispatch();
   const [isFbLoading, setFbLoading] = useState<boolean>(false);
 
-  const { control, handleSubmit, reset, watch } = useForm<SignInFormType>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isValid },
+  } = useForm<SignInFormType>({
     mode: 'onBlur',
     defaultValues: { username: '', email: '', password: '', confirmPassword: '' },
   });
@@ -147,7 +153,7 @@ export default function Register() {
         )}
       />
 
-      <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={isFbLoading}>
+      <Button mt="$8" onPress={handleSubmit(onSubmit)} disabled={!isValid || isFbLoading}>
         {isFbLoading && <Spinner size="small" />}
         {`Creat${!isFbLoading ? 'e' : 'ing'} account`}
       </Button>
